@@ -46,7 +46,9 @@ public partial class Dormitory_ManagementContext : DbContext
                 .HasMaxLength(60)
                 .IsUnicode(false)
                 .HasColumnName("fmonth");
-            entity.Property(e => e.MobileNo).HasColumnName("mobileNo");
+            entity.Property(e => e.MobileNo)
+                .HasMaxLength(15)
+                .HasColumnName("mobileNo");
 
             entity.HasOne(d => d.MobileNoNavigation).WithMany()
                 .HasPrincipalKey(p => p.Mobile)
@@ -57,7 +59,7 @@ public partial class Dormitory_ManagementContext : DbContext
 
         modelBuilder.Entity<Room>(entity =>
         {
-            entity.HasKey(e => e.RoomNo).HasName("PK__rooms__6C3BFE6DF28C580A");
+            entity.HasKey(e => e.RoomNo).HasName("PK__rooms__6C3BFE6DA2B39911");
 
             entity.ToTable("rooms");
 
@@ -76,7 +78,7 @@ public partial class Dormitory_ManagementContext : DbContext
 
         modelBuilder.Entity<Student>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Student__3213E83F00530F93");
+            entity.HasKey(e => e.Id).HasName("PK__Student__3213E83F9A68C1BD");
 
             entity.ToTable("Student");
 
@@ -104,7 +106,9 @@ public partial class Dormitory_ManagementContext : DbContext
                 .HasMaxLength(250)
                 .IsUnicode(false)
                 .HasColumnName("mname");
-            entity.Property(e => e.Mobile).HasColumnName("mobile");
+            entity.Property(e => e.Mobile)
+                .HasMaxLength(15)
+                .HasColumnName("mobile");
             entity.Property(e => e.Name)
                 .HasMaxLength(250)
                 .IsUnicode(false)
@@ -123,11 +127,11 @@ public partial class Dormitory_ManagementContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__users__1788CC4C428186D7");
+            entity.HasKey(e => e.UserId).HasName("PK__users__1788CC4CA426E9F7");
 
             entity.ToTable("users");
 
-            entity.HasIndex(e => e.Username, "UQ__users__536C85E4BA37FD8B").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__users__536C85E41878FC37").IsUnique();
 
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.Username).HasMaxLength(50);

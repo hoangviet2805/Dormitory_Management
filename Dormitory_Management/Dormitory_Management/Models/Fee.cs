@@ -5,7 +5,7 @@ namespace Dormitory_Management.Models;
 
 public partial class Fee
 {
-    public long MobileNo { get; set; }
+    public string MobileNo { get; set; } = null!;
 
     public string Fmonth { get; set; } = null!;
 

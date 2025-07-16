@@ -1,0 +1,75 @@
+﻿<Page x:Class="Dormitory_Management.View.AddStudentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Dormitory_Management.View"
+      mc:Ignorable="d" 
+      Title="AddStudentPage" Background="#00BCD4" Width="900">
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border CornerRadius="10" Background="White" Padding="20" Grid.Row="1">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+
+                <!-- Số điện thoại -->
+                <TextBlock Text="Số điện thoại:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtMobile" Grid.Row="0" Grid.Column="1" Margin="5"/>
+
+                <!-- Tên Sinh Viên -->
+                <TextBlock Text="Tên Sinh Viên:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtStudentName" Grid.Row="1" Grid.Column="1" Margin="5"/>
+
+                <!-- Tên cha -->
+                <TextBlock Text="Tên cha:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtFatherName" Grid.Row="2" Grid.Column="1" Margin="5"/>
+
+                <!-- Tên mẹ -->
+                <TextBlock Text="Tên mẹ:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtMotherName" Grid.Row="3" Grid.Column="1" Margin="5"/>
+
+                <!-- Email -->
+                <TextBlock Text="Email ID:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtEmail" Grid.Row="4" Grid.Column="1" Margin="5"/>
+
+                <!-- Địa chỉ -->
+                <TextBlock Text="Địa chỉ thường trú:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtAddress" Grid.Row="5" Grid.Column="1" Margin="5"/>
+
+                <!-- CCCD -->
+                <TextBlock Text="CCCD:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtIDProof" Grid.Row="6" Grid.Column="1" Margin="5"/>
+
+                <!-- Số phòng -->
+                <TextBlock Text="Số phòng:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center"/>
+                <ComboBox x:Name="comboRoomNo" Grid.Row="7" Grid.Column="1" Margin="5"/>
+
+                <!-- Buttons -->
+                <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <Button x:Name="btnSave" Content="💾 Lưu" Width="100" Margin="10,0" Click="btnSave_Click"/>
+                    <Button x:Name="btnClear" Content="❌ Clear" Width="100" Margin="10,0" Click="btnClear_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

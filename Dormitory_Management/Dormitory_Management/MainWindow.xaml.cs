@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Dormitory_Management.View;
 
 namespace Dormitory_Management
 {
@@ -24,16 +25,16 @@ namespace Dormitory_Management
         // Sự kiện khi nhấn nút Quản Lý Phòng
         private void ManageRoomsClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Quản lý phòng clicked.");
-            // Logic điều hướng hoặc mở cửa sổ mới ở đây
+            // Điều hướng đến trang ManageRoomsPage
+            MainFrame.Navigate(new ManageRoomsPage());
         }
 
         // Sự kiện khi nhấn nút Thêm Sinh Viên
         private void AddStudentClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Thêm sinh viên clicked.");
-            // Logic điều hướng hoặc mở cửa sổ mới ở đây
+            MainFrame.Navigate(new AddStudentPage());
         }
+
 
         // Sự kiện khi nhấn nút Cập Nhật - Xóa Sinh Viên
         private void UpdateDeleteStudentClick(object sender, RoutedEventArgs e)
@@ -66,9 +67,27 @@ namespace Dormitory_Management
         // Sự kiện khi nhấn nút Đăng xuất
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Đăng xuất clicked.");
-            // Logic đăng xuất hoặc điều hướng về trang đăng nhập
-            this.Close(); // Đóng cửa sổ hiện tại (hoặc mở cửa sổ đăng nhập)
+            // Hiển thị MessageBox yêu cầu xác nhận đăng xuất
+            MessageBoxResult result = MessageBox.Show(
+                "Bạn có chắc chắn muốn đăng xuất?",
+                "Xác nhận đăng xuất",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question
+            );
+
+            // Kiểm tra kết quả người dùng chọn
+            if (result == MessageBoxResult.Yes)
+            {
+                // Đóng cửa sổ MainWindow hiện tại
+                this.Hide();  // Ẩn cửa sổ MainWindow
+
+                // Mở cửa sổ Login sau khi đăng xuất
+                Login loginWindow = new Login();
+                loginWindow.Show();
+            }
+            // Nếu người dùng chọn No, không làm gì cả
         }
+
+
     }
 }

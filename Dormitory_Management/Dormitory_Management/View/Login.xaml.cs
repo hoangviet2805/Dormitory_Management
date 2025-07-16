@@ -58,6 +58,15 @@ namespace Dormitory_Management.View
                 ErrorText.Text = "Sai tên đăng nhập hoặc mật khẩu.";
             }
         }
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            // Đóng cửa sổ MainWindow hiện tại
+            this.Close();
+
+            // Mở cửa sổ Login
+            Login loginWindow = new Login();
+            loginWindow.Show();  // Hiển thị cửa sổ Login
+        }
 
         // Sự kiện khi nhấn nút Quên mật khẩu
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)

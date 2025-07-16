@@ -34,15 +34,6 @@
         </StackPanel>
 
         <!-- Nội dung chính -->
-        <Grid Background="#f4f6f7" Grid.ColumnSpan="2" Margin="184,0,0,0">
-            <StackPanel Margin="20">
-                <!-- Tiêu đề -->
-                <TextBlock Text="Chương Trình Quản Lý Ký Túc Xá" FontSize="26" FontWeight="Bold" Foreground="#2c3e50" Margin="0,0,0,10"/>
-                <TextBlock Text="Chào mừng bạn đến với hệ thống quản lý ký túc xá!" FontSize="16" Foreground="#7f8c8d" Margin="0,0,0,20"/>
-
-                <!-- Nội dung khác -->
-                <!-- Có thể thêm các phần tử nội dung khác tại đây -->
-            </StackPanel>
-        </Grid>
+        <Frame x:Name="MainFrame" Grid.Column="1" Background="#f4f6f7" Margin="10"/>
     </Grid>
 </Window>

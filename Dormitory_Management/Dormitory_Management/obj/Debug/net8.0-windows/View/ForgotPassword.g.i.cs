@@ -108,7 +108,7 @@ namespace Dormitory_Management.View {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Dormitory_Management;V1.0.0.0;component/view/forgotpassword.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Dormitory_Management;component/view/forgotpassword.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\View\ForgotPassword.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\App.xaml
-3-754074368
+5-182547934
 
-11867209961
+13-81199750
 233396353779
-MainWindow.xaml;View\ForgotPassword.xaml;View\Login.xaml;
+MainWindow.xaml;View\AddStudentPage.xaml;View\ForgotPassword.xaml;View\Login.xaml;View\ManageRoomsPage.xaml;
 
 False
 
