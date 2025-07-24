@@ -164,10 +164,8 @@ namespace Dormitory_Management.View
             var result = MessageBox.Show("Are you sure you want to check out this student?", "Confirm Checkout", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
-                // Update living status to "No"
                 _currentStudent.Living = "No";
 
-                // Update room status to available
                 var roomNo = _currentStudent.RoomNo;
                 var room = _context.Rooms.FirstOrDefault(r => r.RoomNo == roomNo);
                 if (room != null)
@@ -175,7 +173,6 @@ namespace Dormitory_Management.View
                     room.Booked = "No";
                 }
 
-                // Save the changes
                 _context.SaveChanges();
 
                 MessageBox.Show("Student has been checked out and the room is now available.");
@@ -192,15 +189,12 @@ namespace Dormitory_Management.View
                 return;
             }
 
-            // Ask user for confirmation to re-check in the student
             var result = MessageBox.Show($"Are you sure you want to re-check in student {_currentStudent.Name}?", "Confirm Re-check In", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes)
             {
-                // Set the student's living status to "Yes" (indicating they are living again)
                 _currentStudent.Living = "Yes";
 
-                // If the student has a room number assigned, mark the room as booked
                 if (_currentStudent.RoomNo != 0)
                 {
                     var room = _context.Rooms.FirstOrDefault(r => r.RoomNo == _currentStudent.RoomNo);
@@ -210,7 +204,6 @@ namespace Dormitory_Management.View
                     }
                 }
 
-                // Save the changes
                 _context.SaveChanges();
 
                 MessageBox.Show("The student has been re-checked in successfully.");
@@ -218,39 +211,41 @@ namespace Dormitory_Management.View
         }
 
 
-        // Delete student and update room status (same as checkout)
+        // Delete student and update room and fees status
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (_currentStudent == null)
             {
-                MessageBox.Show("No student found.");
+                MessageBox.Show("No student found to delete.");
                 return;
             }
 
             var result = MessageBox.Show("Are you sure you want to delete this student?", "Confirm Delete", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
-                // Update living status to "No"
                 _currentStudent.Living = "No";
-
-                // Update room status
                 var roomNo = _currentStudent.RoomNo;
                 var room = _context.Rooms.FirstOrDefault(r => r.RoomNo == roomNo);
                 if (room != null)
                 {
-                    room.Booked = "No"; 
+                    room.Booked = "No";
                 }
+                var studentFees = _context.Fees.Where(f => f.MobileNo == _currentStudent.Mobile).ToList();
 
+                foreach (var fee in studentFees)
+                {
+                    _context.Fees.Remove(fee);
+                }
                 _context.SaveChanges();
 
-                // Remove student
                 _context.Students.Remove(_currentStudent);
                 _context.SaveChanges();
 
-                MessageBox.Show("Student deleted and room status updated.");
+                MessageBox.Show("Student has been deleted and room status updated.");
                 ClearFields();
             }
         }
+
 
         // Clear fields on the form
         private void btnClear_Click(object sender, RoutedEventArgs e)
