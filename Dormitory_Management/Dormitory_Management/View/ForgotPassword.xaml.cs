@@ -39,7 +39,7 @@ namespace Dormitory_Management.View
 
             if (string.IsNullOrEmpty(email))
             {
-                ErrorText.Text = "Vui lòng nhập email đã đăng ký.";
+                ErrorText.Text = "Please enter your registered email.";
                 return;
             }
 
@@ -53,12 +53,12 @@ namespace Dormitory_Management.View
                 SendOtpToEmail(user.Email, generatedOtp);
                 currentUser = user;
 
-                ResetSection.Visibility = Visibility.Visible;  // Hiển thị phần nhập OTP và mật khẩu mới
+                ResetSection.Visibility = Visibility.Visible; 
                 ErrorText.Text = "";
             }
             else
             {
-                ErrorText.Text = "Không tìm thấy tài khoản với email này.";
+                ErrorText.Text = "No account found with this email.";
             }
         }
 
@@ -72,13 +72,13 @@ namespace Dormitory_Management.View
         // Gửi OTP qua email
         private void SendOtpToEmail(string toEmail, string otpCode)
         {
-            string fromEmail = "dormitorymanagement123@gmail.com"; // Thay bằng Gmail của bạn
-            string appPassword = "jjao zwow pfeq qhua";  // Thay bằng App Password của bạn
+            string fromEmail = "dormitorymanagement123@gmail.com";
+            string appPassword = "jjao zwow pfeq qhua";
 
             MailMessage message = new MailMessage(fromEmail, toEmail)
             {
-                Subject = "Mã OTP khôi phục mật khẩu",
-                Body = $"Mã OTP của bạn là: {otpCode}",
+                Subject = "OTP code to recover password",
+                Body = $"Your OTP code is: {otpCode}",
                 IsBodyHtml = false
             };
 
@@ -101,25 +101,25 @@ namespace Dormitory_Management.View
 
             if (string.IsNullOrEmpty(enteredOtp) || currentUser == null)
             {
-                ErrorText.Text = "Vui lòng gửi lại mã OTP.";
+                ErrorText.Text = "Please resend OTP code.";
                 return;
             }
 
             if (enteredOtp != generatedOtp)
             {
-                ErrorText.Text = "Mã OTP không đúng.";
+                ErrorText.Text = "OTP code is incorrect.";
                 return;
             }
 
             if (string.IsNullOrEmpty(newPassword) || string.IsNullOrEmpty(confirmPassword))
             {
-                ErrorText.Text = "Vui lòng nhập đầy đủ mật khẩu mới.";
+                ErrorText.Text = "Please enter your new password in full.";
                 return;
             }
 
             if (newPassword != confirmPassword)
             {
-                ErrorText.Text = "Mật khẩu xác nhận không khớp.";
+                ErrorText.Text = "Confirmation password does not match.";
                 return;
             }
 
@@ -131,15 +131,15 @@ namespace Dormitory_Management.View
                 var user = context.Users.FirstOrDefault(u => u.UserId == currentUser.UserId);
                 if (user != null)
                 {
-                    user.Password = hashedPassword; // Lưu mật khẩu đã mã hóa
+                    user.Password = hashedPassword;
                     context.SaveChanges();
 
-                    MessageBox.Show("Đổi mật khẩu thành công!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
-                    this.Close(); // Đóng cửa sổ quên mật khẩu
+                    MessageBox.Show("Password changed successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    this.Close();
                 }
                 else
                 {
-                    ErrorText.Text = "Không tìm thấy tài khoản để cập nhật.";
+                    ErrorText.Text = "No account found to update.";
                 }
             }
         }

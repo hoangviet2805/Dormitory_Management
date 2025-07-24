@@ -25,5 +25,7 @@ public partial class Student
 
     public string? Living { get; set; }
 
+    public virtual ICollection<Fee> Fees { get; set; } = new List<Fee>();
+
     public virtual Room RoomNoNavigation { get; set; } = null!;
 }

@@ -1,0 +1,44 @@
+﻿<Page x:Class="Dormitory_Management.View.StudentStatus"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Dormitory_Management.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="650" d:DesignWidth="900"
+      Title="StudentStatus">
+
+    <Grid Background="#f0f0f0" Margin="0,0,0,65">
+        <!-- Phần nhập thông tin tìm kiếm -->
+        <Border Background="White" CornerRadius="10" Padding="20" Width="700" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20">
+            <StackPanel>
+                <!-- Tiêu đề -->
+                <TextBlock Text="Student Status" FontSize="20" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+                <!-- Thanh tìm kiếm theo số điện thoại -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,20">
+                    <TextBlock Text="Search by Phone Number:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBox x:Name="PhoneSearchTextBox" Width="200" Height="30" Margin="0,0,10,0"/>
+                    <Button Content="Search" Width="120" Click="SearchByPhone_Click"/>
+                </StackPanel>
+
+                <!-- Bảng thông tin sinh viên -->
+                <DataGrid x:Name="StudentDataGrid" Margin="0,20,0,20" Height="363" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="STT" Binding="{Binding Id}" Width="50" />
+                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="100" />
+                        <DataGridTextColumn Header="Mobile" Binding="{Binding Mobile}" Width="150" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="150" />
+                        <DataGridTextColumn Header="Father's Name" Binding="{Binding Fname}" Width="150" />
+                        <DataGridTextColumn Header="Mother's Name" Binding="{Binding Mname}" Width="150" />
+                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="200" />
+                        <DataGridTextColumn Header="Address" Binding="{Binding Paddress}" Width="200" />
+                        <DataGridTextColumn Header="ID Proof" Binding="{Binding Idproof}" Width="150" />
+                        <DataGridTextColumn Header="Room No" Binding="{Binding RoomNo}" Width="100" />
+                        <DataGridTextColumn Header="Living Status" Binding="{Binding Living}" Width="100" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

@@ -119,14 +119,18 @@ D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Manageme
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\Login.baml
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\MainWindow.g.cs
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\AddStudentPage.g.cs
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\EditStudentPage.g.cs
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\ForgotPassword.g.cs
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\Login.g.cs
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\ManageRoomsPage.g.cs
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\RoomPayment.g.cs
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\App.g.cs
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\Dormitory_Management_MarkupCompile.cache
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\Dormitory_Management_MarkupCompile.lref
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\AddStudentPage.baml
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\EditStudentPage.baml
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\ManageRoomsPage.baml
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\RoomPayment.baml
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\Dormitory_Management.g.resources
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\Dormitory_Management.GeneratedMSBuildEditorConfig.editorconfig
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\Dormitory_Management.AssemblyInfoInputs.cache
@@ -139,3 +143,5 @@ D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Manageme
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\Dormitory_Management.pdb
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\Dormitory_Management.genruntimeconfig.cache
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\ref\Dormitory_Management.dll
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\StudentStatus.g.cs
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\StudentStatus.baml

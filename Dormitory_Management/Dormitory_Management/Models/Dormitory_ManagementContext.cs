@@ -37,29 +37,31 @@ public partial class Dormitory_ManagementContext : DbContext
     {
         modelBuilder.Entity<Fee>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("fees");
+            entity.HasKey(e => new { e.MobileNo, e.Fmonth }).HasName("PK__fees__6073FE79815D0B5B");
 
-            entity.Property(e => e.Amount).HasColumnName("amount");
+            entity.ToTable("fees");
+
+            entity.HasIndex(e => new { e.MobileNo, e.Fmonth }, "idx_mobile_fmonth").IsUnique();
+
+            entity.Property(e => e.MobileNo)
+                .HasMaxLength(15)
+                .HasColumnName("mobileNo");
             entity.Property(e => e.Fmonth)
                 .HasMaxLength(60)
                 .IsUnicode(false)
                 .HasColumnName("fmonth");
-            entity.Property(e => e.MobileNo)
-                .HasMaxLength(15)
-                .HasColumnName("mobileNo");
+            entity.Property(e => e.Amount).HasColumnName("amount");
 
-            entity.HasOne(d => d.MobileNoNavigation).WithMany()
+            entity.HasOne(d => d.MobileNoNavigation).WithMany(p => p.Fees)
                 .HasPrincipalKey(p => p.Mobile)
                 .HasForeignKey(d => d.MobileNo)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__fees__mobileNo__52593CB8");
+                .HasConstraintName("FK__fees__mobileNo__534D60F1");
         });
 
         modelBuilder.Entity<Room>(entity =>
         {
-            entity.HasKey(e => e.RoomNo).HasName("PK__rooms__6C3BFE6DA2B39911");
+            entity.HasKey(e => e.RoomNo).HasName("PK__rooms__6C3BFE6DF90CBF67");
 
             entity.ToTable("rooms");
 
@@ -78,7 +80,7 @@ public partial class Dormitory_ManagementContext : DbContext
 
         modelBuilder.Entity<Student>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Student__3213E83F9A68C1BD");
+            entity.HasKey(e => e.Id).HasName("PK__Student__3213E83FDDD7302B");
 
             entity.ToTable("Student");
 
@@ -127,11 +129,11 @@ public partial class Dormitory_ManagementContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__users__1788CC4CA426E9F7");
+            entity.HasKey(e => e.UserId).HasName("PK__users__1788CC4C73447E5A");
 
             entity.ToTable("users");
 
-            entity.HasIndex(e => e.Username, "UQ__users__536C85E41878FC37").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__users__536C85E4D878662A").IsUnique();
 
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.Username).HasMaxLength(50);

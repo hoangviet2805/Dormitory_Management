@@ -28,18 +28,18 @@ namespace Dormitory_Management.View
         {
             InitializeComponent();
             _context = new Dormitory_ManagementContext();
-            LoadAvailableRooms();  // Load phòng trống vào comboBox
+            LoadAvailableRooms(); 
         }
 
         // Load các phòng chưa có sinh viên (Booked = "No")
         private void LoadAvailableRooms()
         {
             var availableRooms = _context.Rooms
-                .Where(r => r.Booked == "No")  // Lọc phòng chưa có sinh viên
-                .Select(r => r.RoomNo)  // Chỉ lấy số phòng
+                .Where(r => r.Booked == "No")  
+                .Select(r => r.RoomNo)  
                 .ToList();
 
-            comboRoomNo.ItemsSource = availableRooms;  // Nạp vào ComboBox
+            comboRoomNo.ItemsSource = availableRooms; 
         }
 
         // Nút Lưu
@@ -59,35 +59,35 @@ namespace Dormitory_Management.View
                 string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(cccd) ||
                 string.IsNullOrWhiteSpace(address) || selectedRoom == null)
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ tất cả thông tin.");
+                MessageBox.Show("Please fill in all information!");
                 return;
             }
 
             // Kiểm tra số điện thoại hợp lệ
             if (!Regex.IsMatch(phone, @"^\d{10}$"))
             {
-                MessageBox.Show("Số điện thoại phải gồm đúng 10 chữ số.");
+                MessageBox.Show("The ID card must consist of exactly 10 digits!");
                 return;
             }
 
             // Kiểm tra số CCCD hợp lệ
             if (!Regex.IsMatch(cccd, @"^\d{12}$"))
             {
-                MessageBox.Show("CCCD phải gồm đúng 12 chữ số.");
+                MessageBox.Show("The ID card must consist of exactly 12 digits!");
                 return;
             }
 
             // Kiểm tra email hợp lệ (không ký tự đặc biệt)
             if (!Regex.IsMatch(email, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
             {
-                MessageBox.Show("Email không hợp lệ.");
+                MessageBox.Show("The email is invalid!");
                 return;
             }
 
             // Kiểm tra số điện thoại đã tồn tại chưa
             if (_context.Students.Any(s => s.Mobile == phone))
             {
-                MessageBox.Show("Số điện thoại này đã được sử dụng.");
+                MessageBox.Show("This phone number has already been used!");
                 return;
             }
 
@@ -97,7 +97,7 @@ namespace Dormitory_Management.View
             // Tạo sinh viên mới
             Student student = new Student
             {
-                Mobile = phone,  // Mobile là chuỗi, không cần chuyển đổi sang long
+                Mobile = phone,
                 Name = name,
                 Fname = father,
                 Mname = mother,
@@ -112,15 +112,15 @@ namespace Dormitory_Management.View
             var room = _context.Rooms.FirstOrDefault(r => r.RoomNo == roomNo);
             if (room != null)
             {
-                room.Booked = "Yes";  // Đánh dấu phòng đã có sinh viên
+                room.Booked = "Yes";
             }
 
             _context.Students.Add(student);
             _context.SaveChanges();
 
-            MessageBox.Show("Thêm sinh viên thành công!");
+            MessageBox.Show("Add students successfully!");
             ClearFields();
-            LoadAvailableRooms(); // Làm mới danh sách phòng sau khi thêm sinh viên
+            LoadAvailableRooms();
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
@@ -137,7 +137,7 @@ namespace Dormitory_Management.View
             txtEmail.Clear();
             txtAddress.Clear();
             txtIDProof.Clear();
-            comboRoomNo.SelectedIndex = -1;  // Reset ComboBox
+            comboRoomNo.SelectedIndex = -1; 
         }
     }
 }

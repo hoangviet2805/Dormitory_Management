@@ -30,37 +30,31 @@ namespace Dormitory_Management.View
             LoadRooms();
         }
 
-        // Hàm load dữ liệu phòng từ cơ sở dữ liệu vào DataGrid
+        
         private void LoadRooms()
         {
-            // Tải danh sách phòng từ cơ sở dữ liệu vào DataGrid
             RoomDataGrid.ItemsSource = _context.Rooms.ToList();
         }
 
-        // Sự kiện khi nhấn nút Thêm Phòng
-        // Sự kiện khi nhấn nút Thêm Phòng
         private void AddRoom_Click(object sender, RoutedEventArgs e)
         {
             string roomStatus = ActivateRoomCheckBox.IsChecked == true ? "Yes" : "No";
-            string bookedStatus = "No";  // Mặc định là chưa đặt phòng
+            string bookedStatus = "No";
 
             long roomNo;
-            // Kiểm tra xem người dùng có nhập số phòng hợp lệ không
             if (string.IsNullOrWhiteSpace(RoomNumberTextBox.Text) || !long.TryParse(RoomNumberTextBox.Text, out roomNo))
             {
-                MessageBox.Show("Số phòng không hợp lệ. Vui lòng nhập lại.");
+                MessageBox.Show("The room number is invalid. Please enter it again.");
                 return;
             }
 
-            // Kiểm tra nếu phòng đã tồn tại
             var existingRoom = _context.Rooms.FirstOrDefault(r => r.RoomNo == roomNo);
             if (existingRoom != null)
             {
-                MessageBox.Show($"Phòng {roomNo} đã tồn tại trong hệ thống.");
+                MessageBox.Show($"Room {roomNo} already exists in the system.");
                 return;
             }
 
-            // Tạo phòng mới
             Room newRoom = new Room
             {
                 RoomNo = roomNo,
@@ -71,18 +65,16 @@ namespace Dormitory_Management.View
             _context.Rooms.Add(newRoom);
             _context.SaveChanges();
 
-            LoadRooms();  // Tải lại danh sách phòng sau khi thêm
-            MessageBox.Show($"Thêm phòng {roomNo} thành công.");
+            LoadRooms();
+            MessageBox.Show($"Room {roomNo} added successfully.");
         }
 
 
-        // Sự kiện khi nhấn nút Tìm Kiếm Phòng
         private void SearchRoom_Click(object sender, RoutedEventArgs e)
         {
-            // Kiểm tra xem người dùng đã nhập số phòng chưa
             if (string.IsNullOrEmpty(SearchRoomNumberTextBox.Text))
             {
-                MessageBox.Show("Vui lòng nhập số phòng cần tìm.");
+                MessageBox.Show("Please enter the room number to search.");
                 return;
             }
 
@@ -91,84 +83,93 @@ namespace Dormitory_Management.View
 
             if (room != null)
             {
-                // Hiển thị thông báo phòng đã tìm thấy
-                MessageBox.Show($"Đã tìm thấy phòng {roomNo}.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                // Cập nhật giao diện với thông tin phòng
+                MessageBox.Show($"Room {roomNo} found.", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateActivateRoomCheckBox.IsChecked = room.RoomStatus == "Yes";
                 DeactivateRoomCheckBox.IsChecked = room.RoomStatus == "No";
             }
             else
             {
-                // Hiển thị thông báo không tìm thấy phòng
-                MessageBox.Show($"Phòng {roomNo} không có trong danh sách.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Room {roomNo} is not in the list.", "Notification", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-
-        // Sự kiện khi nhấn nút Cập nhật Phòng
         private void UpdateRoom_Click(object sender, RoutedEventArgs e)
         {
             long roomNo = Convert.ToInt64(SearchRoomNumberTextBox.Text);
+            var studentInRoom = _context.Students.FirstOrDefault(s => s.RoomNo == roomNo);
+            if (studentInRoom != null)
+            {
+                MessageBox.Show($"Cannot update room {roomNo} because there are students currently staying in this room.", "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             var roomToUpdate = _context.Rooms.FirstOrDefault(r => r.RoomNo == roomNo);
-
             if (roomToUpdate != null)
             {
                 roomToUpdate.RoomStatus = UpdateActivateRoomCheckBox.IsChecked == true ? "Yes" : "No";
                 roomToUpdate.Booked = DeactivateRoomCheckBox.IsChecked == true ? "No" : roomToUpdate.Booked;
                 _context.SaveChanges();
 
-                LoadRooms();  // Tải lại danh sách phòng sau khi cập nhật
+                LoadRooms();
+                MessageBox.Show($"Room {roomNo} updated successfully.");
             }
             else
             {
-                MessageBox.Show("Phòng không tồn tại.");
+                MessageBox.Show("The room does not exist.");
             }
         }
 
-        
-        // Sự kiện khi nhấn nút Xóa Phòng
         private void DeleteRoom_Click(object sender, RoutedEventArgs e)
         {
-            // Kiểm tra nếu người dùng đã nhập số phòng
-            if (string.IsNullOrEmpty(SearchRoomNumberTextBox.Text))
+            string roomNoText = SearchRoomNumberTextBox.Text.Trim();
+
+            // Check if the input is empty
+            if (string.IsNullOrEmpty(roomNoText))
             {
-                MessageBox.Show("Vui lòng nhập số phòng cần xóa.");
+                MessageBox.Show("Please enter a valid room number.");
                 return;
             }
 
-            long roomNo = Convert.ToInt64(SearchRoomNumberTextBox.Text);
-            var roomToDelete = _context.Rooms.FirstOrDefault(r => r.RoomNo == roomNo);
-
-            if (roomToDelete != null)
+            // Try to parse the room number to ensure it's a valid number
+            if (!long.TryParse(roomNoText, out long roomNo))
             {
-                // Hỏi người dùng có chắc chắn muốn xóa phòng này
-                var result = MessageBox.Show($"Bạn có chắc chắn muốn xóa phòng {roomNo}?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                MessageBox.Show("Invalid room number format.");
+                return;
+            }
 
-                if (result == MessageBoxResult.Yes)
+            // Check if the room has any students assigned
+            var studentInRoom = _context.Students.FirstOrDefault(s => s.RoomNo == roomNo);
+            if (studentInRoom != null)
+            {
+                MessageBox.Show($"Cannot delete the room {roomNo} because there are students currently staying in this room!", "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Ask for confirmation before deleting
+            var result = MessageBox.Show($"Are you sure you want to delete room {roomNo}?", "Confirm Deletion", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                var roomToDelete = _context.Rooms.FirstOrDefault(r => r.RoomNo == roomNo);
+                if (roomToDelete != null)
                 {
-                    // Kiểm tra nếu phòng có sinh viên hay không, không thể xóa nếu có sinh viên
-                    var studentInRoom = _context.Students.FirstOrDefault(s => s.RoomNo == roomNo);
-                    if (studentInRoom != null)
-                    {
-                        MessageBox.Show("Không thể xóa phòng này vì có sinh viên đang ở.");
-                        return;
-                    }
-
-                    // Xóa phòng nếu không có sinh viên
                     _context.Rooms.Remove(roomToDelete);
                     _context.SaveChanges();
-
-                    // Tải lại danh sách phòng sau khi xóa
                     LoadRooms();
-                    MessageBox.Show("Xóa phòng thành công.");
+                    MessageBox.Show($"Room {roomNo} deleted successfully.");
+                }
+                else
+                {
+                    MessageBox.Show("The room does not exist.");
                 }
             }
             else
             {
-                MessageBox.Show("Phòng không tồn tại.");
+                MessageBox.Show("Room deletion has been canceled.");
             }
         }
+
+
+
 
 
     }

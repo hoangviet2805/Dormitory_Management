@@ -5,6 +5,9 @@
     <Compile Update="View\AddStudentPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\EditStudentPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\ForgotPassword.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -12,6 +15,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\ManageRoomsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\RoomPayment.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\StudentStatus.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

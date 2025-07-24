@@ -19,17 +19,17 @@ namespace Dormitory_Management.View
     /// <summary>
     /// Interaction logic for Login.xaml
     /// </summary>
-    public partial class Login : Window  // Cập nhật tên lớp là Login
+    public partial class Login : Window 
     {
         private readonly Dormitory_ManagementContext _context;
 
         public Login()
         {
             InitializeComponent();
-            _context = new Dormitory_ManagementContext();  // Khởi tạo DbContext để kết nối cơ sở dữ liệu
+            _context = new Dormitory_ManagementContext();
         }
 
-        // Sự kiện khi nhấn nút Đăng Nhập
+       
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameBox.Text.Trim();
@@ -37,45 +37,39 @@ namespace Dormitory_Management.View
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                ErrorText.Text = "Vui lòng nhập tên đăng nhập và mật khẩu.";
+                ErrorText.Text = "Please enter your username and password.";
                 return;
             }
 
-            // Mã hóa mật khẩu trước khi so sánh
+           
             string hashedPassword = HashPassword(password);
 
             var user = _context.Users.FirstOrDefault(u => u.Username == username && u.Password == hashedPassword);
 
             if (user != null)
             {
-                MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                MainWindow main = new MainWindow();  // Truyền thông tin người dùng vào MainWindow
+                MessageBox.Show("Login successful!", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+                MainWindow main = new MainWindow();  
                 main.Show();
-                this.Close();  // Đóng cửa sổ đăng nhập
+                this.Close(); 
             }
             else
             {
-                ErrorText.Text = "Sai tên đăng nhập hoặc mật khẩu.";
+                ErrorText.Text = "Incorrect username or password.";
             }
         }
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
-            // Đóng cửa sổ MainWindow hiện tại
             this.Close();
-
-            // Mở cửa sổ Login
             Login loginWindow = new Login();
-            loginWindow.Show();  // Hiển thị cửa sổ Login
+            loginWindow.Show(); 
         }
 
-        // Sự kiện khi nhấn nút Quên mật khẩu
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
-            ForgotPassword forgotPasswordWindow = new ForgotPassword(); // Mở cửa sổ quên mật khẩu
+            ForgotPassword forgotPasswordWindow = new ForgotPassword();
             forgotPasswordWindow.ShowDialog();
         }
-
-        // Hàm mã hóa SHA256 (Sử dụng SHA-256 để mã hóa mật khẩu)
         private string HashPassword(string password)
         {
             using (SHA256 sha = SHA256.Create())

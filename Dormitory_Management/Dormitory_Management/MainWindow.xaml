@@ -4,12 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Chương Trình Quản Lý Ký Túc Xá" Height="600" Width="1000"
+        Title="Dormitory Management Program" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize">
 
     <Grid>
-        <!-- Cột lưới chính: Sidebar + Content -->
+        <!-- Main Grid: Sidebar + Content -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
@@ -17,23 +17,22 @@
 
         <!-- Sidebar -->
         <StackPanel Background="#34495e" VerticalAlignment="Stretch" HorizontalAlignment="Left">
-            <TextBlock Text="Dashboard" Foreground="White" FontSize="24" FontWeight="Bold" Margin="20"/>
+            <TextBlock Text="Dormitory Management" Foreground="White" FontSize="24" FontWeight="Bold" Margin="20"/>
             <Separator Margin="10" Foreground="White"/>
 
-            <Button Content="Quản Lý Phòng" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="ManageRoomsClick"/>
-            <Button Content="Thêm Sinh Viên" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="AddStudentClick"/>
-            <Button Content="Cập Nhật - Xóa Sinh Viên" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="UpdateDeleteStudentClick"/>
-            <Button Content="Thanh Toán Phí Phòng" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="ManageFeesClick"/>
-            <Button Content="Tất Cả Trạng Thái Sinh Viên" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="ManageStudentStatusClick"/>
-            <Button Content="Sinh Viên Trả Phòng" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="StudentCheckoutClick"/>
+            <Button Content="Manage Rooms" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="ManageRoomsClick"/>
+            <Button Content="Add Student" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="AddStudentClick"/>
+            <Button Content="Update / Delete Student" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="UpdateDeleteStudentClick"/>
+            <Button Content="Room Payment" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="RoomPaymentButton_Click"/>
+            <Button Content="All Student Room Statuses" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="ManageStudentStatusClick"/>
 
             <Separator Margin="10" Foreground="White"/>
 
-            <!-- Nút Đăng xuất -->
-            <Button Content="Đăng xuất" Margin="10" Height="40" Background="#e74c3c" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="Logout_Click"/>
+            <!-- Logout Button -->
+            <Button Content="Logout" Margin="10" Height="40" Background="#e74c3c" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="Logout_Click"/>
         </StackPanel>
 
-        <!-- Nội dung chính -->
+        <!-- Main Content -->
         <Frame x:Name="MainFrame" Grid.Column="1" Background="#f4f6f7" Margin="10"/>
     </Grid>
 </Window>
