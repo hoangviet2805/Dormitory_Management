@@ -17,7 +17,7 @@
 
         <!-- Sidebar -->
         <StackPanel Background="#34495e" VerticalAlignment="Stretch" HorizontalAlignment="Left">
-            <TextBlock Text="Dormitory Management" Foreground="White" FontSize="24" FontWeight="Bold" Margin="20"/>
+            <TextBlock Text="Dormitory Management" Foreground="White" FontSize="18" FontWeight="Bold" Margin="20"/>
             <Separator Margin="10" Foreground="White"/>
 
             <Button Content="Manage Rooms" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="ManageRoomsClick"/>

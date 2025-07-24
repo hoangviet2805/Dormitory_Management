@@ -27,8 +27,10 @@ namespace Dormitory_Management.View
         {
             InitializeComponent();
             _context = new Dormitory_ManagementContext();
-            LoadPaymentData();
+            LoadPaymentData(); // Load the full payment data initially
         }
+
+        // Search student by phone number
         private void SearchStudent_Click(object sender, RoutedEventArgs e)
         {
             string phone = PhoneTextBox.Text.Trim();
@@ -45,13 +47,17 @@ namespace Dormitory_Management.View
                 StudentNameTextBox.Text = student.Name;
                 EmailTextBox.Text = student.Email;
                 RoomNumberTextBox.Text = student.RoomNo.ToString();
-                AmountTextBox.Text = "20000"; 
+                AmountTextBox.Text = "20000"; // Example amount
+                LoadPaymentData(phone); // Load payments for the specific phone number
             }
             else
             {
                 MessageBox.Show("Student not found.");
+                LoadPaymentData(); // If no student is found, load all payments again
             }
         }
+
+        // Make payment
         private void PayButton_Click(object sender, RoutedEventArgs e)
         {
             string phone = PhoneTextBox.Text.Trim();
@@ -82,18 +88,19 @@ namespace Dormitory_Management.View
             var payment = new Fee
             {
                 MobileNo = phone,
-                Fmonth = fmonth, 
+                Fmonth = fmonth,
                 Amount = amountToPay
             };
 
             _context.Fees.Add(payment);
             _context.SaveChanges();
 
-            LoadPaymentData();
+            LoadPaymentData(); // Reload payment data after saving the payment
 
             MessageBox.Show("Payment successful.");
         }
 
+        // Clear the form fields
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             PhoneTextBox.Clear();
@@ -102,11 +109,21 @@ namespace Dormitory_Management.View
             RoomNumberTextBox.Clear();
             AmountTextBox.Clear();
             PaymentDatePicker.SelectedDate = null;
+
+            LoadPaymentData(); // Reload all payment data when fields are cleared
         }
 
-        private void LoadPaymentData()
+        // Load payment data, optionally filter by phone number
+        private void LoadPaymentData(string phone = null)
         {
-            var paymentData = _context.Fees
+            var paymentDataQuery = _context.Fees.AsQueryable();
+
+            if (!string.IsNullOrEmpty(phone))
+            {
+                paymentDataQuery = paymentDataQuery.Where(f => f.MobileNo == phone);
+            }
+
+            var paymentData = paymentDataQuery
                 .Select(f => new
                 {
                     f.MobileNo,
@@ -115,7 +132,7 @@ namespace Dormitory_Management.View
                 })
                 .ToList();
 
-            PaymentListBox.ItemsSource = paymentData;
+            PaymentListBox.ItemsSource = paymentData; // Bind to the ListBox
         }
     }
 }
