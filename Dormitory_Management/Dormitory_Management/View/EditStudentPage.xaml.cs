@@ -181,6 +181,9 @@ namespace Dormitory_Management.View
         }
 
         // Re-check in the student
+        // Re-check in the student
+        // Re-check in the student (mark as not living and free the room)
+        // Re-check in the student (mark as not living and free the room)
         private void btnRecheckIn_Click(object sender, RoutedEventArgs e)
         {
             if (_currentStudent == null)
@@ -193,22 +196,46 @@ namespace Dormitory_Management.View
 
             if (result == MessageBoxResult.Yes)
             {
-                _currentStudent.Living = "Yes";
-
-                if (_currentStudent.RoomNo != 0)
+                // Ensure the ComboBox is not empty and the user has selected a room
+                if (comboRoomNo.SelectedItem == null)
                 {
-                    var room = _context.Rooms.FirstOrDefault(r => r.RoomNo == _currentStudent.RoomNo);
-                    if (room != null)
-                    {
-                        room.Booked = "Yes"; // Mark the room as booked again
-                    }
+                    MessageBox.Show("Please select a room.");
+                    return;
                 }
+
+                // Get the selected room number
+                long newRoomNo = (long)comboRoomNo.SelectedItem;
+
+                // Show available rooms for re-checking in
+                var availableRooms = _context.Rooms.Where(r => r.Booked == "No").Select(r => r.RoomNo).ToList();
+                comboRoomNo.ItemsSource = availableRooms;
+
+                // If no room is available, inform the user
+                if (availableRooms.Count == 0)
+                {
+                    MessageBox.Show("No available rooms to select.");
+                    return;
+                }
+
+                // Mark the student as living and assign a new room
+                var newRoom = _context.Rooms.FirstOrDefault(r => r.RoomNo == newRoomNo);
+                if (newRoom != null)
+                {
+                    newRoom.Booked = "Yes"; // Mark the selected room as booked
+                }
+
+                // Enable re-checking in the new room
+                _currentStudent.Living = "Yes";
+                _currentStudent.RoomNo = newRoomNo;
 
                 _context.SaveChanges();
 
                 MessageBox.Show("The student has been re-checked in successfully.");
             }
         }
+
+
+
 
 
         // Delete student and update room and fees status

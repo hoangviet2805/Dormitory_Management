@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ClosedXML.Excel;
 using Dormitory_Management.Models;
 
 namespace Dormitory_Management.View
@@ -22,15 +24,15 @@ namespace Dormitory_Management.View
     public partial class RoomPayment : Page
     {
         private readonly Dormitory_ManagementContext _context;
+        private string _currentPhone;
 
         public RoomPayment()
         {
             InitializeComponent();
             _context = new Dormitory_ManagementContext();
-            LoadPaymentData(); // Load the full payment data initially
+            LoadPaymentData();
         }
 
-        // Search student by phone number
         private void SearchStudent_Click(object sender, RoutedEventArgs e)
         {
             string phone = PhoneTextBox.Text.Trim();
@@ -47,17 +49,30 @@ namespace Dormitory_Management.View
                 StudentNameTextBox.Text = student.Name;
                 EmailTextBox.Text = student.Email;
                 RoomNumberTextBox.Text = student.RoomNo.ToString();
-                AmountTextBox.Text = "20000"; // Example amount
-                LoadPaymentData(phone); // Load payments for the specific phone number
+                AmountTextBox.Text = "";
+                _currentPhone = phone;
+                LoadPaymentData(phone);
             }
             else
             {
                 MessageBox.Show("Student not found.");
-                LoadPaymentData(); // If no student is found, load all payments again
+                LoadPaymentData();
             }
         }
 
-        // Make payment
+        private void ViewPayment_Click(object sender, RoutedEventArgs e)
+        {
+            if (PaymentListBox.Visibility == Visibility.Collapsed)
+            {
+                PaymentListBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                PaymentListBox.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        
         private void PayButton_Click(object sender, RoutedEventArgs e)
         {
             string phone = PhoneTextBox.Text.Trim();
@@ -95,12 +110,11 @@ namespace Dormitory_Management.View
             _context.Fees.Add(payment);
             _context.SaveChanges();
 
-            LoadPaymentData(); // Reload payment data after saving the payment
+            LoadPaymentData();
 
             MessageBox.Show("Payment successful.");
         }
 
-        // Clear the form fields
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             PhoneTextBox.Clear();
@@ -110,10 +124,9 @@ namespace Dormitory_Management.View
             AmountTextBox.Clear();
             PaymentDatePicker.SelectedDate = null;
 
-            LoadPaymentData(); // Reload all payment data when fields are cleared
+            LoadPaymentData();
         }
 
-        // Load payment data, optionally filter by phone number
         private void LoadPaymentData(string phone = null)
         {
             var paymentDataQuery = _context.Fees.AsQueryable();
@@ -132,7 +145,67 @@ namespace Dormitory_Management.View
                 })
                 .ToList();
 
-            PaymentListBox.ItemsSource = paymentData; // Bind to the ListBox
+            PaymentListBox.ItemsSource = paymentData;
         }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you want to export the payment data?", "Confirm Export", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+                saveFileDialog.Filter = "Excel Files (*.xlsx)|*.xlsx";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    var filePath = saveFileDialog.FileName;
+
+                    string phone = PhoneTextBox.Text.Trim();
+
+                    try
+                    {
+                        using (var workbook = new XLWorkbook())
+                        {
+                            var worksheet = workbook.Worksheets.Add("Room Payments");
+
+                            worksheet.Cell(1, 1).Value = "Phone Number";
+                            worksheet.Cell(1, 2).Value = "Month";
+                            worksheet.Cell(1, 3).Value = "Amount";
+
+                            var paymentDataQuery = _context.Fees.AsQueryable();
+
+                            if (!string.IsNullOrEmpty(phone))
+                            {
+                                paymentDataQuery = paymentDataQuery.Where(f => f.MobileNo == phone);
+                            }
+
+                            var paymentData = paymentDataQuery.ToList();
+
+                            int row = 2;
+                            foreach (var payment in paymentData)
+                            {
+                                worksheet.Cell(row, 1).Value = payment.MobileNo;
+                                worksheet.Cell(row, 2).Value = payment.Fmonth;
+                                worksheet.Cell(row, 3).Value = payment.Amount;
+                                row++;
+                            }
+
+                            workbook.SaveAs(filePath);
+
+                            MessageBox.Show("Excel file exported successfully!");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error when exporting Excel file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+        }
+
+
+
+
     }
+
+
 }

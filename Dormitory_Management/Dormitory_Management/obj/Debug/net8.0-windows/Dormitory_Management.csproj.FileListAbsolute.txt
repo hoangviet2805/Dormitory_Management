@@ -145,3 +145,17 @@ D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Manageme
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\ref\Dormitory_Management.dll
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\StudentStatus.g.cs
 D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\obj\Debug\net8.0-windows\View\StudentStatus.baml
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\bin\Debug\net8.0-windows\EPPlus.dll
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\bin\Debug\net8.0-windows\EPPlus.Interfaces.dll
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\bin\Debug\net8.0-windows\Microsoft.IO.RecyclableMemoryStream.dll
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\bin\Debug\net8.0-windows\System.Security.Cryptography.Pkcs.dll
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\bin\Debug\net8.0-windows\System.Security.Cryptography.Xml.dll
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\bin\Debug\net8.0-windows\ClosedXML.dll
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\bin\Debug\net8.0-windows\ClosedXML.Parser.dll
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\bin\Debug\net8.0-windows\DocumentFormat.OpenXml.dll
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\bin\Debug\net8.0-windows\DocumentFormat.OpenXml.Framework.dll
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\bin\Debug\net8.0-windows\ExcelNumberFormat.dll
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\bin\Debug\net8.0-windows\RBush.dll
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\bin\Debug\net8.0-windows\SixLabors.Fonts.dll
+D:\Tai_lieu\school\Tai_lieu\SE5\PRN201\project\project-prn212\Dormitory_Management\Dormitory_Management\bin\Debug\net8.0-windows\System.IO.Packaging.dll

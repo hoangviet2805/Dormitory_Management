@@ -23,7 +23,7 @@
                 </StackPanel>
 
                 <!-- Bảng thông tin sinh viên -->
-                <DataGrid x:Name="StudentDataGrid" Margin="0,20,0,20" Height="363" AutoGenerateColumns="False">
+                <DataGrid x:Name="StudentDataGrid" Margin="0,20,0,20" Height="363" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="STT" Binding="{Binding Id}" Width="50" />
                         <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="100" />
@@ -38,6 +38,7 @@
                         <DataGridTextColumn Header="Living Status" Binding="{Binding Living}" Width="100" />
                     </DataGrid.Columns>
                 </DataGrid>
+
             </StackPanel>
         </Border>
     </Grid>
