@@ -19,7 +19,7 @@ namespace Dormitory_Management.View
     /// <summary>
     /// Interaction logic for Login.xaml
     /// </summary>
-    public partial class Login : Window 
+    public partial class Login : Window
     {
         private readonly Dormitory_ManagementContext _context;
 
@@ -29,7 +29,7 @@ namespace Dormitory_Management.View
             _context = new Dormitory_ManagementContext();
         }
 
-       
+
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameBox.Text.Trim();
@@ -41,7 +41,7 @@ namespace Dormitory_Management.View
                 return;
             }
 
-           
+
             string hashedPassword = HashPassword(password);
 
             var user = _context.Users.FirstOrDefault(u => u.Username == username && u.Password == hashedPassword);
@@ -49,9 +49,9 @@ namespace Dormitory_Management.View
             if (user != null)
             {
                 MessageBox.Show("Login successful!", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
-                MainWindow main = new MainWindow();  
+                MainWindow main = new MainWindow();
                 main.Show();
-                this.Close(); 
+                this.Close();
             }
             else
             {
@@ -62,7 +62,7 @@ namespace Dormitory_Management.View
         {
             this.Close();
             Login loginWindow = new Login();
-            loginWindow.Show(); 
+            loginWindow.Show();
         }
 
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)

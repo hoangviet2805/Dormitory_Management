@@ -31,7 +31,7 @@ namespace Dormitory_Management.View
             _context = new Dormitory_ManagementContext();
         }
 
-        // Search for student by phone number
+        // Search
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             string phone = txtMobile.Text.Trim();
@@ -46,7 +46,6 @@ namespace Dormitory_Management.View
 
             if (_currentStudent != null)
             {
-                // Fill in student details
                 txtStudentName.Text = _currentStudent.Name;
                 txtFatherName.Text = _currentStudent.Fname;
                 txtMotherName.Text = _currentStudent.Mname;
@@ -54,27 +53,43 @@ namespace Dormitory_Management.View
                 txtAddress.Text = _currentStudent.Paddress;
                 txtIDProof.Text = _currentStudent.Idproof;
 
-                // Display current room
-                if (_currentStudent.RoomNo != 0)
+                // Hiển thị thông tin phòng
+                if (_currentStudent.RoomNo != 0 && _currentStudent.RoomNo != null)
                 {
-                    txtCurrentRoom.Text = _currentStudent.RoomNo.ToString();
+                    var room = _context.Rooms.FirstOrDefault(r => r.RoomNo == _currentStudent.RoomNo);
+                    if (room != null)
+                    {
+                        txtCurrentRoom.Text = $"{room.RoomNo} (Booked: {room.Booked})";
+                    }
+                    else
+                    {
+                        txtCurrentRoom.Text = _currentStudent.RoomNo.ToString();
+                    }
                 }
                 else
                 {
                     txtCurrentRoom.Text = "Not Assigned";
                 }
 
-                // Update ComboBox with available rooms
-                var availableRooms = _context.Rooms.Where(r => r.Booked == "No").Select(r => r.RoomNo).ToList();
+                // Load các phòng còn trống vào comboBox
+                var availableRooms = _context.Rooms
+                    .Where(r => r.Booked == "No")
+                    .Select(r => r.RoomNo)
+                    .ToList();
+
                 comboRoomNo.ItemsSource = availableRooms;
+                comboRoomNo.IsEnabled = true;
             }
             else
             {
                 MessageBox.Show("Student not found with this phone number.");
+                ClearFields();
             }
         }
 
-        // Save updated student information
+
+
+        // Save update
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             string name = txtStudentName.Text.Trim();
@@ -86,8 +101,9 @@ namespace Dormitory_Management.View
             string address = txtAddress.Text.Trim();
             var selectedRoom = comboRoomNo.SelectedItem;
 
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(father) || string.IsNullOrWhiteSpace(mother) ||
-                string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(cccd) ||
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(father) ||
+                string.IsNullOrWhiteSpace(mother) || string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(cccd) ||
                 string.IsNullOrWhiteSpace(address) || selectedRoom == null)
             {
                 MessageBox.Show("Please fill in all fields.");
@@ -120,39 +136,30 @@ namespace Dormitory_Management.View
             }
 
             long newRoomNo = (long)selectedRoom;
+            long? oldRoomNo = student.RoomNo;
 
-            var result = MessageBox.Show($"Are you sure you want to change room from {student.RoomNo} to {newRoomNo}?", "Confirm Room Change", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
+            if (oldRoomNo != newRoomNo)
             {
-                // Update old room status
-                var oldRoom = _context.Rooms.FirstOrDefault(r => r.RoomNo == student.RoomNo);
-                if (oldRoom != null)
-                {
-                    oldRoom.Booked = "No";
-                }
+                var confirm = MessageBox.Show($"Are you sure you want to change room from {oldRoomNo?.ToString() ?? "None"} to {newRoomNo}?", "Confirm Room Change", MessageBoxButton.YesNo);
+                if (confirm != MessageBoxResult.Yes)
+                    return;
 
-                // Update new room status
-                var newRoom = _context.Rooms.FirstOrDefault(r => r.RoomNo == newRoomNo);
-                if (newRoom != null)
-                {
-                    newRoom.Booked = "Yes"; 
-                }
-
-                // Update student details
-                student.Name = name;
-                student.Fname = father;
-                student.Mname = mother;
-                student.Email = email;
-                student.Paddress = address;
-                student.Idproof = cccd;
-                student.RoomNo = newRoomNo;
-
-                _context.SaveChanges();
-                MessageBox.Show("Student information and room updated successfully!");
+                UpdateRoomStatus(oldRoomNo, newRoomNo);
             }
+
+            student.Name = name;
+            student.Fname = father;
+            student.Mname = mother;
+            student.Email = email;
+            student.Paddress = address;
+            student.Idproof = cccd;
+            student.RoomNo = newRoomNo;
+
+            _context.SaveChanges();
+            MessageBox.Show("Student information and room updated successfully!");
         }
 
-        // Checkout the student (mark as not living and free the room)
+        // Checkout
         private void btnCheckout_Click(object sender, RoutedEventArgs e)
         {
             if (_currentStudent == null)
@@ -166,24 +173,24 @@ namespace Dormitory_Management.View
             {
                 _currentStudent.Living = "No";
 
-                var roomNo = _currentStudent.RoomNo;
-                var room = _context.Rooms.FirstOrDefault(r => r.RoomNo == roomNo);
-                if (room != null)
+                if (_currentStudent.RoomNo.HasValue)
                 {
-                    room.Booked = "No";
+                    var room = _context.Rooms.FirstOrDefault(r => r.RoomNo == _currentStudent.RoomNo.Value);
+                    if (room != null)
+                    {
+                        room.Booked = "No";
+                    }
+
+                    _currentStudent.RoomNo = null;
                 }
 
                 _context.SaveChanges();
-
                 MessageBox.Show("Student has been checked out and the room is now available.");
                 ClearFields();
             }
         }
 
-        // Re-check in the student
-        // Re-check in the student
-        // Re-check in the student (mark as not living and free the room)
-        // Re-check in the student (mark as not living and free the room)
+        // Re-check in
         private void btnRecheckIn_Click(object sender, RoutedEventArgs e)
         {
             if (_currentStudent == null)
@@ -192,53 +199,62 @@ namespace Dormitory_Management.View
                 return;
             }
 
-            var result = MessageBox.Show($"Are you sure you want to re-check in student {_currentStudent.Name}?", "Confirm Re-check In", MessageBoxButton.YesNo);
-
-            if (result == MessageBoxResult.Yes)
+            // Bắt buộc phải chọn phòng
+            if (comboRoomNo.SelectedItem == null)
             {
-                // Ensure the ComboBox is not empty and the user has selected a room
-                if (comboRoomNo.SelectedItem == null)
+                MessageBox.Show("Please select a room before re-checking in.");
+                return;
+            }
+
+            long selectedRoomNo = (long)comboRoomNo.SelectedItem;
+
+            var confirm = MessageBox.Show($"Are you sure you want to re-check in student {_currentStudent.Name} to room {selectedRoomNo}?", "Confirm Re-check In", MessageBoxButton.YesNo);
+            if (confirm != MessageBoxResult.Yes)
+                return;
+
+            // Tải lại trạng thái phòng (tránh dùng context cũ)
+            var newRoom = _context.Rooms.FirstOrDefault(r => r.RoomNo == selectedRoomNo);
+            if (newRoom == null || newRoom.Booked == "Yes")
+            {
+                MessageBox.Show("Selected room is not available.");
+                return;
+            }
+
+            // Cập nhật trạng thái phòng cũ và mới
+            UpdateRoomStatus(_currentStudent.RoomNo, selectedRoomNo);
+
+            // Cập nhật thông tin sinh viên
+            _currentStudent.Living = "Yes";
+            _currentStudent.RoomNo = selectedRoomNo;
+
+            _context.SaveChanges();
+            MessageBox.Show("The student has been re-checked in successfully.");
+
+            // Tải lại thông tin UI
+            btnSearch_Click(null, null);
+        }
+
+
+        private void UpdateRoomStatus(long? oldRoomNo, long newRoomNo)
+        {
+            if (oldRoomNo.HasValue && oldRoomNo != newRoomNo)
+            {
+                var oldRoom = _context.Rooms.FirstOrDefault(r => r.RoomNo == oldRoomNo.Value);
+                if (oldRoom != null)
                 {
-                    MessageBox.Show("Please select a room.");
-                    return;
+                    oldRoom.Booked = "No";
                 }
+            }
 
-                // Get the selected room number
-                long newRoomNo = (long)comboRoomNo.SelectedItem;
-
-                // Show available rooms for re-checking in
-                var availableRooms = _context.Rooms.Where(r => r.Booked == "No").Select(r => r.RoomNo).ToList();
-                comboRoomNo.ItemsSource = availableRooms;
-
-                // If no room is available, inform the user
-                if (availableRooms.Count == 0)
-                {
-                    MessageBox.Show("No available rooms to select.");
-                    return;
-                }
-
-                // Mark the student as living and assign a new room
-                var newRoom = _context.Rooms.FirstOrDefault(r => r.RoomNo == newRoomNo);
-                if (newRoom != null)
-                {
-                    newRoom.Booked = "Yes"; // Mark the selected room as booked
-                }
-
-                // Enable re-checking in the new room
-                _currentStudent.Living = "Yes";
-                _currentStudent.RoomNo = newRoomNo;
-
-                _context.SaveChanges();
-
-                MessageBox.Show("The student has been re-checked in successfully.");
+            var newRoom = _context.Rooms.FirstOrDefault(r => r.RoomNo == newRoomNo);
+            if (newRoom != null)
+            {
+                newRoom.Booked = "Yes";
             }
         }
 
 
-
-
-
-        // Delete student and update room and fees status
+        // Delete
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (_currentStudent == null)
@@ -251,19 +267,18 @@ namespace Dormitory_Management.View
             if (result == MessageBoxResult.Yes)
             {
                 _currentStudent.Living = "No";
-                var roomNo = _currentStudent.RoomNo;
-                var room = _context.Rooms.FirstOrDefault(r => r.RoomNo == roomNo);
+
+                var room = _context.Rooms.FirstOrDefault(r => r.RoomNo == _currentStudent.RoomNo);
                 if (room != null)
                 {
                     room.Booked = "No";
                 }
-                var studentFees = _context.Fees.Where(f => f.MobileNo == _currentStudent.Mobile).ToList();
 
+                var studentFees = _context.Fees.Where(f => f.MobileNo == _currentStudent.Mobile).ToList();
                 foreach (var fee in studentFees)
                 {
                     _context.Fees.Remove(fee);
                 }
-                _context.SaveChanges();
 
                 _context.Students.Remove(_currentStudent);
                 _context.SaveChanges();
@@ -273,14 +288,11 @@ namespace Dormitory_Management.View
             }
         }
 
-
-        // Clear fields on the form
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             ClearFields();
         }
 
-        // Clear fields
         private void ClearFields()
         {
             txtMobile.Clear();
@@ -291,9 +303,10 @@ namespace Dormitory_Management.View
             txtAddress.Clear();
             txtIDProof.Clear();
             comboRoomNo.SelectedIndex = -1;
+            comboRoomNo.ItemsSource = null;
             txtCurrentRoom.Text = string.Empty;
+            _currentStudent = null;
         }
-
     }
 
 }

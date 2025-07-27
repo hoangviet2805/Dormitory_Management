@@ -37,7 +37,7 @@ public partial class Dormitory_ManagementContext : DbContext
     {
         modelBuilder.Entity<Fee>(entity =>
         {
-            entity.HasKey(e => new { e.MobileNo, e.Fmonth }).HasName("PK__fees__6073FE79815D0B5B");
+            entity.HasKey(e => new { e.MobileNo, e.Fmonth }).HasName("PK__fees__6073FE7931A22E9F");
 
             entity.ToTable("fees");
 
@@ -61,7 +61,7 @@ public partial class Dormitory_ManagementContext : DbContext
 
         modelBuilder.Entity<Room>(entity =>
         {
-            entity.HasKey(e => e.RoomNo).HasName("PK__rooms__6C3BFE6DF90CBF67");
+            entity.HasKey(e => e.RoomNo).HasName("PK__rooms__6C3BFE6D03A1AD00");
 
             entity.ToTable("rooms");
 
@@ -80,7 +80,7 @@ public partial class Dormitory_ManagementContext : DbContext
 
         modelBuilder.Entity<Student>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Student__3213E83FDDD7302B");
+            entity.HasKey(e => e.Id).HasName("PK__Student__3213E83F3AB9838C");
 
             entity.ToTable("Student");
 
@@ -123,17 +123,16 @@ public partial class Dormitory_ManagementContext : DbContext
 
             entity.HasOne(d => d.RoomNoNavigation).WithMany(p => p.Students)
                 .HasForeignKey(d => d.RoomNo)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Student__roomNo__5070F446");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__users__1788CC4C73447E5A");
+            entity.HasKey(e => e.UserId).HasName("PK__users__1788CC4CE806EA68");
 
             entity.ToTable("users");
 
-            entity.HasIndex(e => e.Username, "UQ__users__536C85E4D878662A").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__users__536C85E4CBFABA29").IsUnique();
 
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.Username).HasMaxLength(50);

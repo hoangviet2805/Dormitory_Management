@@ -21,11 +21,11 @@ public partial class Student
 
     public string Idproof { get; set; } = null!;
 
-    public long RoomNo { get; set; }
+    public long? RoomNo { get; set; }
 
     public string? Living { get; set; }
 
     public virtual ICollection<Fee> Fees { get; set; } = new List<Fee>();
 
-    public virtual Room RoomNoNavigation { get; set; } = null!;
+    public virtual Room? RoomNoNavigation { get; set; }
 }

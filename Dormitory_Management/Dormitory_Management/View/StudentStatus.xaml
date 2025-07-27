@@ -20,12 +20,19 @@
                     <TextBlock Text="Search by Phone Number:" VerticalAlignment="Center" Margin="0,0,10,0"/>
                     <TextBox x:Name="PhoneSearchTextBox" Width="200" Height="30" Margin="0,0,10,0"/>
                     <Button Content="Search" Width="120" Click="SearchByPhone_Click"/>
+                    <Button Content="Refresh" Click="Refresh_Click" Width="100" Height="30" Margin="10,0,10,0"/>
+
                 </StackPanel>
 
                 <!-- Bảng thông tin sinh viên -->
-                <DataGrid x:Name="StudentDataGrid" Margin="0,20,0,20" Height="363" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+                <DataGrid x:Name="StudentDataGrid"
+          Margin="20"
+          AutoGenerateColumns="False"
+          IsReadOnly="True"
+          SelectionMode="Single"
+          VerticalAlignment="Stretch"
+          HorizontalAlignment="Stretch">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="STT" Binding="{Binding Id}" Width="50" />
                         <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="100" />
                         <DataGridTextColumn Header="Mobile" Binding="{Binding Mobile}" Width="150" />
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="150" />
@@ -38,6 +45,7 @@
                         <DataGridTextColumn Header="Living Status" Binding="{Binding Living}" Width="100" />
                     </DataGrid.Columns>
                 </DataGrid>
+
 
             </StackPanel>
         </Border>

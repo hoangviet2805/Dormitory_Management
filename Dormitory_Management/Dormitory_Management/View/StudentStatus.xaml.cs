@@ -62,5 +62,9 @@ namespace Dormitory_Management.View
             string phoneNumber = PhoneSearchTextBox.Text.Trim();
             LoadStudentData(phoneNumber); 
         }
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            LoadStudentData(); // Gọi lại hàm lấy dữ liệu
+        }
     }
 }

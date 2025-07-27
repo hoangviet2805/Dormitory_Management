@@ -48,31 +48,26 @@ namespace Dormitory_Management.View
             {
                 StudentNameTextBox.Text = student.Name;
                 EmailTextBox.Text = student.Email;
-                RoomNumberTextBox.Text = student.RoomNo.ToString();
+                RoomNumberTextBox.Text = student.RoomNo?.ToString() ?? "Not Assigned";
                 AmountTextBox.Text = "";
                 _currentPhone = phone;
+
                 LoadPaymentData(phone);
             }
             else
             {
                 MessageBox.Show("Student not found.");
+                ClearFields();
                 LoadPaymentData();
             }
         }
 
         private void ViewPayment_Click(object sender, RoutedEventArgs e)
         {
-            if (PaymentListBox.Visibility == Visibility.Collapsed)
-            {
-                PaymentListBox.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                PaymentListBox.Visibility = Visibility.Collapsed;
-            }
+            PaymentListBox.Visibility =
+                (PaymentListBox.Visibility == Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        
         private void PayButton_Click(object sender, RoutedEventArgs e)
         {
             string phone = PhoneTextBox.Text.Trim();
@@ -85,6 +80,20 @@ namespace Dormitory_Management.View
                 return;
             }
 
+            var student = _context.Students.FirstOrDefault(s => s.Mobile == phone);
+            if (student == null)
+            {
+                MessageBox.Show("Student not found.");
+                return;
+            }
+
+            // ✅ Chỉ cho phép thanh toán nếu sinh viên đang ở
+            if (student.Living == "No")
+            {
+                MessageBox.Show("This student has checked out and is unable to pay!");
+                return;
+            }
+
             string fmonth = paymentDate.Value.ToString("MMMM yyyy");
             var paymentExists = _context.Fees.Any(f => f.MobileNo == phone && f.Fmonth == fmonth);
             if (paymentExists)
@@ -93,8 +102,7 @@ namespace Dormitory_Management.View
                 return;
             }
 
-            int amountToPay;
-            if (!int.TryParse(amount, out amountToPay))
+            if (!int.TryParse(amount, out int amountToPay))
             {
                 MessageBox.Show("Invalid amount.");
                 return;
@@ -110,12 +118,17 @@ namespace Dormitory_Management.View
             _context.Fees.Add(payment);
             _context.SaveChanges();
 
-            LoadPaymentData();
-
+            LoadPaymentData(phone);
             MessageBox.Show("Payment successful.");
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            ClearFields();
+            LoadPaymentData();
+        }
+
+        private void ClearFields()
         {
             PhoneTextBox.Clear();
             StudentNameTextBox.Clear();
@@ -123,8 +136,7 @@ namespace Dormitory_Management.View
             RoomNumberTextBox.Clear();
             AmountTextBox.Clear();
             PaymentDatePicker.SelectedDate = null;
-
-            LoadPaymentData();
+            _currentPhone = null;
         }
 
         private void LoadPaymentData(string phone = null)
@@ -153,12 +165,14 @@ namespace Dormitory_Management.View
             var result = MessageBox.Show("Are you sure you want to export the payment data?", "Confirm Export", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
-                var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
-                saveFileDialog.Filter = "Excel Files (*.xlsx)|*.xlsx";
+                var saveFileDialog = new Microsoft.Win32.SaveFileDialog
+                {
+                    Filter = "Excel Files (*.xlsx)|*.xlsx"
+                };
+
                 if (saveFileDialog.ShowDialog() == true)
                 {
                     var filePath = saveFileDialog.FileName;
-
                     string phone = PhoneTextBox.Text.Trim();
 
                     try
@@ -190,7 +204,6 @@ namespace Dormitory_Management.View
                             }
 
                             workbook.SaveAs(filePath);
-
                             MessageBox.Show("Excel file exported successfully!");
                         }
                     }
@@ -201,11 +214,8 @@ namespace Dormitory_Management.View
                 }
             }
         }
-
-
-
-
     }
+
 
 
 }

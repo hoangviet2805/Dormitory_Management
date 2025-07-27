@@ -65,8 +65,7 @@
 
         <!-- Room Number (ComboBox for changing) -->
         <TextBlock Text="Change Room:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center"/>
-        <ComboBox x:Name="comboRoomNo" Grid.Row="8" Grid.Column="1" Margin="5" IsEnabled="True"/>
-
+        <ComboBox x:Name="comboRoomNo" Grid.Row="8" Grid.Column="1" Margin="5"/>
 
         <!-- Buttons -->
         <StackPanel Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
@@ -75,6 +74,7 @@
             <Button x:Name="btnClear" Content="Clear" Width="100" Margin="10" Click="btnClear_Click"/>
             <Button x:Name="btnCheckout" Content="Checkout" Width="100" Margin="10" Grid.Row="9" Grid.Column="1" Click="btnCheckout_Click"/>
             <Button x:Name="btnRecheckIn" Content="Re-check In" Width="100" Margin="10" Click="btnRecheckIn_Click"/>
+
         </StackPanel>
     </Grid>
 </Page>
