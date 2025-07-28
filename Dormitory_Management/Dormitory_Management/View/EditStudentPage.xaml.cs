@@ -68,8 +68,8 @@ namespace Dormitory_Management.View
                     txtCurrentRoom.Text = "Not Assigned";
                 }
 
-                // Nếu đã checkout → ẩn change room
-                if (_currentStudent.Living == "No")
+                // Xử lý hiển thị Change Room
+                if (_currentStudent.Living == "No" && !isRecheckInMode)
                 {
                     panelChangeRoom.Visibility = Visibility.Collapsed;
                 }
@@ -83,7 +83,7 @@ namespace Dormitory_Management.View
                     comboRoomNo.IsEnabled = true;
                 }
 
-                SetActionButtonsEnabled(true); // bật lại nút nếu có
+                SetActionButtonsEnabled(true); // bật lại các nút chức năng
             }
             else
             {
@@ -91,6 +91,7 @@ namespace Dormitory_Management.View
                 ClearFields();
             }
         }
+
 
 
 
@@ -211,19 +212,23 @@ namespace Dormitory_Management.View
                 return;
             }
 
-            // 🚫 Nếu đang ở thì không được re-check in
+            // Nếu vẫn đang ở thì không được re-check in
             if (_currentStudent.Living == "Yes")
             {
                 MessageBox.Show("This student has not checked out yet. Please checkout before re-checking in.");
                 return;
             }
 
-            // Các xử lý còn lại giữ nguyên như đã sửa:
+            // Nhấn lần đầu: vào chế độ Re-check In
             if (!isRecheckInMode)
             {
                 isRecheckInMode = true;
                 SetActionButtonsEnabled(false);
 
+                // Hiện panel change room
+                panelChangeRoom.Visibility = Visibility.Visible;
+
+                // Load phòng trống
                 comboRoomNo.ItemsSource = _context.Rooms
                     .Where(r => r.Booked == "No")
                     .Select(r => r.RoomNo)
@@ -236,7 +241,7 @@ namespace Dormitory_Management.View
                 return;
             }
 
-            // Nhấn lần 2 để xác nhận...
+            // Nhấn lần 2: xác nhận Re-check In
             if (comboRoomNo.SelectedItem == null)
             {
                 MessageBox.Show("Please select a room before confirming.");
@@ -256,6 +261,7 @@ namespace Dormitory_Management.View
                 return;
             }
 
+            // Cập nhật
             UpdateRoomStatus(_currentStudent.RoomNo, selectedRoomNo);
             _currentStudent.Living = "Yes";
             _currentStudent.RoomNo = selectedRoomNo;
@@ -266,8 +272,10 @@ namespace Dormitory_Management.View
             isRecheckInMode = false;
             SetActionButtonsEnabled(true);
             comboRoomNo.IsEnabled = false;
-            btnSearch_Click(null, null);
+
+            btnSearch_Click(null, null); // reload lại thông tin
         }
+
 
 
 
@@ -361,3 +369,4 @@ namespace Dormitory_Management.View
     }
 
 }
+
