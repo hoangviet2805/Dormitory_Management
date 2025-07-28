@@ -8,7 +8,7 @@
       d:DesignHeight="650" d:DesignWidth="900"
       Title="StudentStatus">
 
-    <Grid Background="#f0f0f0" Margin="0,0,0,65">
+    <Grid  Background="Gainsboro" Margin="0,0,0,65">
         <!-- Phần nhập thông tin tìm kiếm -->
         <Border Background="White" CornerRadius="10" Padding="20" Width="700" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20">
             <StackPanel>

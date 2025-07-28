@@ -7,7 +7,7 @@
       mc:Ignorable="d" d:DesignWidth="900"
       Title="RoomPayment" Height="1090">
 
-    <Grid Background="#f0f0f0" Margin="0,0,0,70">
+    <Grid  Background="Gainsboro" Margin="0,0,0,70">
         <!-- Phần nhập thông tin -->
         <Border Background="White" CornerRadius="10" Padding="20" Width="600" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,20,0,0" Height="600">
             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center">

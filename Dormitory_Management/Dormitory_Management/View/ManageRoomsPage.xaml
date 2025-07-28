@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       Title="ManageRoomsPage" Height="750" Width="1030" >
 
-    <Grid Background="#f0f0f0">
+    <Grid  Background="Gainsboro">
         <!-- Add Room -->
         <Border Background="White" CornerRadius="10" Padding="20" Width="750" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20">
             <StackPanel>

@@ -24,6 +24,8 @@ namespace Dormitory_Management.View
     {
         private readonly Dormitory_ManagementContext _context;
         private Student _currentStudent;
+        private bool isRecheckInMode = false;
+
 
         public EditStudentPage()
         {
@@ -53,32 +55,35 @@ namespace Dormitory_Management.View
                 txtAddress.Text = _currentStudent.Paddress;
                 txtIDProof.Text = _currentStudent.Idproof;
 
-                // Hiển thị thông tin phòng
+                // Hiển thị phòng hiện tại
                 if (_currentStudent.RoomNo != 0 && _currentStudent.RoomNo != null)
                 {
                     var room = _context.Rooms.FirstOrDefault(r => r.RoomNo == _currentStudent.RoomNo);
-                    if (room != null)
-                    {
-                        txtCurrentRoom.Text = $"{room.RoomNo} (Booked: {room.Booked})";
-                    }
-                    else
-                    {
-                        txtCurrentRoom.Text = _currentStudent.RoomNo.ToString();
-                    }
+                    txtCurrentRoom.Text = room != null
+                        ? $"{room.RoomNo} (Booked: {room.Booked})"
+                        : _currentStudent.RoomNo.ToString();
                 }
                 else
                 {
                     txtCurrentRoom.Text = "Not Assigned";
                 }
 
-                // Load các phòng còn trống vào comboBox
-                var availableRooms = _context.Rooms
-                    .Where(r => r.Booked == "No")
-                    .Select(r => r.RoomNo)
-                    .ToList();
+                // Nếu đã checkout → ẩn change room
+                if (_currentStudent.Living == "No")
+                {
+                    panelChangeRoom.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    panelChangeRoom.Visibility = Visibility.Visible;
+                    comboRoomNo.ItemsSource = _context.Rooms
+                        .Where(r => r.Booked == "No")
+                        .Select(r => r.RoomNo)
+                        .ToList();
+                    comboRoomNo.IsEnabled = true;
+                }
 
-                comboRoomNo.ItemsSource = availableRooms;
-                comboRoomNo.IsEnabled = true;
+                SetActionButtonsEnabled(true); // bật lại nút nếu có
             }
             else
             {
@@ -86,6 +91,8 @@ namespace Dormitory_Management.View
                 ClearFields();
             }
         }
+
+
 
 
 
@@ -99,14 +106,13 @@ namespace Dormitory_Management.View
             string phone = txtMobile.Text.Trim();
             string cccd = txtIDProof.Text.Trim();
             string address = txtAddress.Text.Trim();
-            var selectedRoom = comboRoomNo.SelectedItem;
 
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(father) ||
                 string.IsNullOrWhiteSpace(mother) || string.IsNullOrWhiteSpace(email) ||
                 string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(cccd) ||
-                string.IsNullOrWhiteSpace(address) || selectedRoom == null)
+                string.IsNullOrWhiteSpace(address))
             {
-                MessageBox.Show("Please fill in all fields.");
+                MessageBox.Show("Please fill in all personal fields.");
                 return;
             }
 
@@ -135,29 +141,35 @@ namespace Dormitory_Management.View
                 return;
             }
 
-            long newRoomNo = (long)selectedRoom;
-            long? oldRoomNo = student.RoomNo;
-
-            if (oldRoomNo != newRoomNo)
+            // Nếu có chọn phòng mới thì xử lý đổi phòng
+            if (comboRoomNo.SelectedItem != null)
             {
-                var confirm = MessageBox.Show($"Are you sure you want to change room from {oldRoomNo?.ToString() ?? "None"} to {newRoomNo}?", "Confirm Room Change", MessageBoxButton.YesNo);
-                if (confirm != MessageBoxResult.Yes)
-                    return;
+                long newRoomNo = (long)comboRoomNo.SelectedItem;
+                long? oldRoomNo = student.RoomNo;
 
-                UpdateRoomStatus(oldRoomNo, newRoomNo);
+                if (oldRoomNo != newRoomNo)
+                {
+                    var confirm = MessageBox.Show($"Are you sure you want to change room from {oldRoomNo?.ToString() ?? "None"} to {newRoomNo}?", "Confirm Room Change", MessageBoxButton.YesNo);
+                    if (confirm != MessageBoxResult.Yes)
+                        return;
+
+                    UpdateRoomStatus(oldRoomNo, newRoomNo);
+                    student.RoomNo = newRoomNo;
+                }
             }
 
+            // Cập nhật thông tin cá nhân
             student.Name = name;
             student.Fname = father;
             student.Mname = mother;
             student.Email = email;
             student.Paddress = address;
             student.Idproof = cccd;
-            student.RoomNo = newRoomNo;
 
             _context.SaveChanges();
-            MessageBox.Show("Student information and room updated successfully!");
+            MessageBox.Show("Student information updated successfully.");
         }
+
 
         // Checkout
         private void btnCheckout_Click(object sender, RoutedEventArgs e)
@@ -199,10 +211,35 @@ namespace Dormitory_Management.View
                 return;
             }
 
-            // Bắt buộc phải chọn phòng
+            // 🚫 Nếu đang ở thì không được re-check in
+            if (_currentStudent.Living == "Yes")
+            {
+                MessageBox.Show("This student has not checked out yet. Please checkout before re-checking in.");
+                return;
+            }
+
+            // Các xử lý còn lại giữ nguyên như đã sửa:
+            if (!isRecheckInMode)
+            {
+                isRecheckInMode = true;
+                SetActionButtonsEnabled(false);
+
+                comboRoomNo.ItemsSource = _context.Rooms
+                    .Where(r => r.Booked == "No")
+                    .Select(r => r.RoomNo)
+                    .ToList();
+
+                comboRoomNo.IsEnabled = true;
+                comboRoomNo.SelectedIndex = -1;
+
+                MessageBox.Show("Please select a room and click Re-check In again to confirm.");
+                return;
+            }
+
+            // Nhấn lần 2 để xác nhận...
             if (comboRoomNo.SelectedItem == null)
             {
-                MessageBox.Show("Please select a room before re-checking in.");
+                MessageBox.Show("Please select a room before confirming.");
                 return;
             }
 
@@ -212,7 +249,6 @@ namespace Dormitory_Management.View
             if (confirm != MessageBoxResult.Yes)
                 return;
 
-            // Tải lại trạng thái phòng (tránh dùng context cũ)
             var newRoom = _context.Rooms.FirstOrDefault(r => r.RoomNo == selectedRoomNo);
             if (newRoom == null || newRoom.Booked == "Yes")
             {
@@ -220,19 +256,22 @@ namespace Dormitory_Management.View
                 return;
             }
 
-            // Cập nhật trạng thái phòng cũ và mới
             UpdateRoomStatus(_currentStudent.RoomNo, selectedRoomNo);
-
-            // Cập nhật thông tin sinh viên
             _currentStudent.Living = "Yes";
             _currentStudent.RoomNo = selectedRoomNo;
-
             _context.SaveChanges();
+
             MessageBox.Show("The student has been re-checked in successfully.");
 
-            // Tải lại thông tin UI
+            isRecheckInMode = false;
+            SetActionButtonsEnabled(true);
+            comboRoomNo.IsEnabled = false;
             btnSearch_Click(null, null);
         }
+
+
+
+
 
 
         private void UpdateRoomStatus(long? oldRoomNo, long newRoomNo)
@@ -288,6 +327,15 @@ namespace Dormitory_Management.View
             }
         }
 
+        private void SetActionButtonsEnabled(bool isEnabled)
+        {
+            btnSave.IsEnabled = isEnabled;
+            btnDelete.IsEnabled = isEnabled;
+            btnClear.IsEnabled = isEnabled;
+            btnCheckout.IsEnabled = isEnabled;
+        }
+
+
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             ClearFields();
@@ -306,7 +354,10 @@ namespace Dormitory_Management.View
             comboRoomNo.ItemsSource = null;
             txtCurrentRoom.Text = string.Empty;
             _currentStudent = null;
+            isRecheckInMode = false;
+            SetActionButtonsEnabled(true);
         }
+
     }
 
 }

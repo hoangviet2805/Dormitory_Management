@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Dormitory_Management.View"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="EditStudentPage" Background="AliceBlue">
+      Title="EditStudentPage" Background="Gainsboro">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -64,8 +64,11 @@
         <TextBlock x:Name="txtCurrentRoom" Grid.Row="7" Grid.Column="1" Margin="5" VerticalAlignment="Center"/>
 
         <!-- Room Number (ComboBox for changing) -->
-        <TextBlock Text="Change Room:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center"/>
-        <ComboBox x:Name="comboRoomNo" Grid.Row="8" Grid.Column="1" Margin="5"/>
+        <StackPanel x:Name="panelChangeRoom" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <TextBlock Text="Change Room:" VerticalAlignment="Center" Width="100"/>
+            <ComboBox x:Name="comboRoomNo" Width="150"/>
+        </StackPanel>
+
 
         <!-- Buttons -->
         <StackPanel Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
