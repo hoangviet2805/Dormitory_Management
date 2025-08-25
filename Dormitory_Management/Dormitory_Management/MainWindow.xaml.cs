@@ -21,6 +21,11 @@ namespace Dormitory_Management
         {
             InitializeComponent();
         }
+        private void DashboardClick(object sender, RoutedEventArgs e)
+        {
+            // Khi nhấn Dashboard thì load DashboardPage vào Frame
+            MainFrame.Content = new View.DashboardPage();
+        }
 
         private void ManageRoomsClick(object sender, RoutedEventArgs e)
         {

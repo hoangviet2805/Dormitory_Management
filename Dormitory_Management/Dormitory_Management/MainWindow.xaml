@@ -43,6 +43,13 @@
                 <!-- Navigation Buttons -->
                 <StackPanel>
                     <Border Background="#1a73e8" CornerRadius="5" Margin="0,0,0,5">
+                        <Button Content="Dashboard" Height="32"
+                            Background="Transparent" Foreground="White"
+                            FontWeight="SemiBold" BorderThickness="0"
+                            FontSize="11" Click="DashboardClick"/>  
+                        </Border>
+                    
+                    <Border Background="#1a73e8" CornerRadius="5" Margin="0,0,0,5">
                         <Button Content="Manage Rooms" Height="32" Background="Transparent" Foreground="White" FontWeight="SemiBold" BorderThickness="0" FontSize="11" Click="ManageRoomsClick"/>
                     </Border>
                     

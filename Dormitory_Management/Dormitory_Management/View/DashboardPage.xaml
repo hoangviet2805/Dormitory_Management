@@ -1,0 +1,73 @@
+﻿<Page x:Class="Dormitory_Management.View.DashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Title="Dashboard">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#f0f2f5">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Tiêu đề -->
+            <TextBlock Text="Dashboard"
+                       FontSize="22" 
+                       FontWeight="Bold" 
+                       Foreground="#1a73e8"
+                       Margin="0,0,0,20"/>
+
+            <!-- Cards -->
+            <UniformGrid Grid.Row="1" Columns="2" Rows="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" >
+
+                <!-- Tổng số phòng -->
+                <Border Background="White" CornerRadius="12" Margin="10" Padding="15" >
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="🏠" FontSize="30" Margin="0,0,10,0"/>
+                        <StackPanel>
+                            <TextBlock Text="Total Rooms" FontSize="14" Foreground="Gray"/>
+                            <TextBlock x:Name="TotalRoomsText" Text="0" FontSize="20" FontWeight="Bold" Foreground="#1a73e8"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Phòng còn trống -->
+                <Border Background="White" CornerRadius="12" Margin="10" Padding="15" >
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="✅" FontSize="30" Margin="0,0,10,0"/>
+                        <StackPanel>
+                            <TextBlock Text="Available Rooms" FontSize="14" Foreground="Gray"/>
+                            <TextBlock x:Name="AvailableRoomsText" Text="0" FontSize="20" FontWeight="Bold" Foreground="#28a745"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Phòng đã ở -->
+                <Border Background="White" CornerRadius="12" Margin="10" Padding="15" >
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="🛏️" FontSize="30" Margin="0,0,10,0"/>
+                        <StackPanel>
+                            <TextBlock Text="Occupied Rooms" FontSize="14" Foreground="Gray"/>
+                            <TextBlock x:Name="OccupiedRoomsText" Text="0" FontSize="20" FontWeight="Bold" Foreground="#dc3545"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Tổng số sinh viên -->
+                <Border Background="White" CornerRadius="12" Margin="10" Padding="15" >
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="👨‍🎓" FontSize="30" Margin="0,0,10,0"/>
+                        <StackPanel>
+                            <TextBlock Text="Total Students" FontSize="14" Foreground="Gray"/>
+                            <TextBlock x:Name="TotalStudentsText" Text="0" FontSize="20" FontWeight="Bold" Foreground="#17a2b8"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+            </UniformGrid>
+        </Grid>
+    </ScrollViewer>
+</Page>
