@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Dormitory_Management.Models;
 using System.Security.Cryptography;
+using Dormitory_Management.Models;
 
 namespace Dormitory_Management.View
 {
@@ -29,7 +20,6 @@ namespace Dormitory_Management.View
             _context = new Dormitory_ManagementContext();
         }
 
-
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameBox.Text.Trim();
@@ -41,7 +31,6 @@ namespace Dormitory_Management.View
                 return;
             }
 
-
             string hashedPassword = HashPassword(password);
 
             var user = _context.Users.FirstOrDefault(u => u.Username == username && u.Password == hashedPassword);
@@ -49,7 +38,13 @@ namespace Dormitory_Management.View
             if (user != null)
             {
                 MessageBox.Show("Login successful!", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // Mở MainWindow
                 MainWindow main = new MainWindow();
+
+                // 🚀 Hiển thị luôn DashboardPage sau khi login
+                main.MainFrame.Navigate(new Dormitory_Management.View.DashboardPage());
+
                 main.Show();
                 this.Close();
             }
@@ -58,6 +53,7 @@ namespace Dormitory_Management.View
                 ErrorText.Text = "Incorrect username or password.";
             }
         }
+
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -70,14 +66,14 @@ namespace Dormitory_Management.View
             ForgotPassword forgotPasswordWindow = new ForgotPassword();
             forgotPasswordWindow.ShowDialog();
         }
-        
+
         private string HashPassword(string password)
         {
             using (SHA256 sha = SHA256.Create())
             {
-                byte[] bytes = Encoding.UTF8.GetBytes(password); // Chuyển mật khẩu thành mảng byte
-                byte[] hash = sha.ComputeHash(bytes);             // Mã hóa mật khẩu thành hash
-                return BitConverter.ToString(hash).Replace("-", "").ToLower(); // Chuyển mảng byte thành chuỗi hex
+                byte[] bytes = Encoding.UTF8.GetBytes(password);
+                byte[] hash = sha.ComputeHash(bytes);
+                return BitConverter.ToString(hash).Replace("-", "").ToLower();
             }
         }
     }
