@@ -8,46 +8,59 @@
       d:DesignHeight="650" d:DesignWidth="900"
       Title="StudentStatus">
 
-    <Grid  Background="Gainsboro" Margin="0,0,0,65">
+    <Grid Background="#f0f2f5" Margin="10">
         <!-- Phần nhập thông tin tìm kiếm -->
-        <Border Background="White" CornerRadius="10" Padding="20" Width="700" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20">
-            <StackPanel>
+        <Border Background="White" CornerRadius="15" Padding="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
                 <!-- Tiêu đề -->
-                <TextBlock Text="Student Status" FontSize="20" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                <TextBlock Text="Student Status" Grid.Row="0" FontSize="22" FontWeight="Bold" Foreground="#1a73e8" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
                 <!-- Thanh tìm kiếm theo số điện thoại -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,20">
-                    <TextBlock Text="Search by Phone Number:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <TextBox x:Name="PhoneSearchTextBox" Width="200" Height="30" Margin="0,0,10,0"/>
-                    <Button Content="Search" Width="120" Click="SearchByPhone_Click"/>
-                    <Button Content="Refresh" Click="Refresh_Click" Width="100" Height="30" Margin="10,0,10,0"/>
-
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                    <TextBlock Text="Search by Phone Number:" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="#5f6368" FontWeight="SemiBold"/>
+                    <TextBox x:Name="PhoneSearchTextBox" Width="200" Height="35" Margin="0,0,10,0" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
+                    <Border Background="#1a73e8" CornerRadius="5" Width="120" Height="35" Margin="0,0,10,0">
+                        <Button Content="Search" Width="120" Height="35" Background="Transparent" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Click="SearchByPhone_Click"/>
+                    </Border>
+                    <Border Background="#5f6368" CornerRadius="5" Width="100" Height="35" Margin="10,0,0,0">
+                        <Button Content="Refresh" Width="100" Height="35" Background="Transparent" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Click="Refresh_Click"/>
+                    </Border>
                 </StackPanel>
 
                 <!-- Bảng thông tin sinh viên -->
-                <DataGrid x:Name="StudentDataGrid"
-          Margin="20"
-          AutoGenerateColumns="False"
-          IsReadOnly="True"
-          SelectionMode="Single"
-          VerticalAlignment="Stretch"
-          HorizontalAlignment="Stretch">
+                <DataGrid x:Name="StudentDataGrid" Grid.Row="2" 
+                          Margin="0,5,0,0" 
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          SelectionMode="Single"
+                          VerticalAlignment="Stretch"
+                          HorizontalAlignment="Stretch"
+                          BorderBrush="#dadce0"
+                          GridLinesVisibility="Horizontal"
+                          HeadersVisibility="Column"
+                          CanUserResizeColumns="True"
+                          CanUserReorderColumns="True"
+                          HorizontalScrollBarVisibility="Disabled">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="100" />
-                        <DataGridTextColumn Header="Mobile" Binding="{Binding Mobile}" Width="150" />
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="150" />
-                        <DataGridTextColumn Header="Father's Name" Binding="{Binding Fname}" Width="150" />
-                        <DataGridTextColumn Header="Mother's Name" Binding="{Binding Mname}" Width="150" />
+                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" />
+                        <DataGridTextColumn Header="Mobile" Binding="{Binding Mobile}" Width="120" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120" />
+                        <DataGridTextColumn Header="Father's Name" Binding="{Binding Fname}" Width="120" />
+                        <DataGridTextColumn Header="Mother's Name" Binding="{Binding Mname}" Width="120" />
                         <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="200" />
-                        <DataGridTextColumn Header="Address" Binding="{Binding Paddress}" Width="200" />
-                        <DataGridTextColumn Header="ID Proof" Binding="{Binding Idproof}" Width="150" />
-                        <DataGridTextColumn Header="Room No" Binding="{Binding RoomNo}" Width="100" />
+                        <DataGridTextColumn Header="Address" Binding="{Binding Paddress}" Width="120" />
+                        <DataGridTextColumn Header="ID Proof" Binding="{Binding Idproof}" Width="120" />
+                        <DataGridTextColumn Header="Room No" Binding="{Binding RoomNo}" Width="80" />
                         <DataGridTextColumn Header="Living Status" Binding="{Binding Living}" Width="100" />
                     </DataGrid.Columns>
                 </DataGrid>
-
-
-            </StackPanel>
+            </Grid>
         </Border>
     </Grid>
 </Page>

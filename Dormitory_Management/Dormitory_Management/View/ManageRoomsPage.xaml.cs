@@ -95,28 +95,45 @@ namespace Dormitory_Management.View
 
         private void UpdateRoom_Click(object sender, RoutedEventArgs e)
         {
-            long roomNo = Convert.ToInt64(SearchRoomNumberTextBox.Text);
+            if (string.IsNullOrWhiteSpace(SearchRoomNumberTextBox.Text))
+            {
+                MessageBox.Show("Please enter the room number to update.");
+                return;
+            }
+
+            if (!long.TryParse(SearchRoomNumberTextBox.Text, out long roomNo))
+            {
+                MessageBox.Show("Invalid room number format.");
+                return;
+            }
+
+            var roomToUpdate = _context.Rooms.FirstOrDefault(r => r.RoomNo == roomNo);
+            if (roomToUpdate == null)
+            {
+                MessageBox.Show($"Room {roomNo} not found. Please search first before updating.",
+                    "Notification", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Nếu phòng đang có sinh viên thì không được đổi trạng thái
             var studentInRoom = _context.Students.FirstOrDefault(s => s.RoomNo == roomNo);
             if (studentInRoom != null)
             {
-                MessageBox.Show($"Cannot update room {roomNo} because there are students currently staying in this room.", "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"Cannot update room {roomNo} because there are students currently staying in this room.",
+                    "Notification", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            var roomToUpdate = _context.Rooms.FirstOrDefault(r => r.RoomNo == roomNo);
-            if (roomToUpdate != null)
-            {
-                roomToUpdate.RoomStatus = UpdateActivateRoomCheckBox.IsChecked == true ? "Yes" : "No";
-                roomToUpdate.Booked = DeactivateRoomCheckBox.IsChecked == true ? "No" : roomToUpdate.Booked;
-                _context.SaveChanges();
 
-                LoadRooms();
-                MessageBox.Show($"Room {roomNo} updated successfully.");
-            }
-            else
-            {
-                MessageBox.Show("The room does not exist.");
-            }
+            // Update trạng thái
+            roomToUpdate.RoomStatus = UpdateActivateRoomCheckBox.IsChecked == true ? "Yes" : "No";
+            roomToUpdate.Booked = DeactivateRoomCheckBox.IsChecked == true ? "No" : roomToUpdate.Booked;
+
+            _context.SaveChanges();
+            LoadRooms();
+
+            MessageBox.Show($"Room {roomNo} updated successfully.");
         }
+
 
         private void DeleteRoom_Click(object sender, RoutedEventArgs e)
         {

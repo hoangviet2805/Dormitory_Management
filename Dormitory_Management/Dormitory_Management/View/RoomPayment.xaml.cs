@@ -30,13 +30,14 @@ namespace Dormitory_Management.View
         {
             InitializeComponent();
             _context = new Dormitory_ManagementContext();
+            
+            // Load all payment data initially
             LoadPaymentData();
         }
 
         private void SearchStudent_Click(object sender, RoutedEventArgs e)
         {
             string phone = PhoneTextBox.Text.Trim();
-
             if (string.IsNullOrEmpty(phone))
             {
                 MessageBox.Show("Please enter a phone number.");
@@ -48,24 +49,17 @@ namespace Dormitory_Management.View
             {
                 StudentNameTextBox.Text = student.Name;
                 EmailTextBox.Text = student.Email;
-                RoomNumberTextBox.Text = student.RoomNo?.ToString() ?? "Not Assigned";
-                AmountTextBox.Text = "";
+                RoomNumberTextBox.Text = student.RoomNo.ToString();
                 _currentPhone = phone;
 
+                // Load payment data for this specific student
                 LoadPaymentData(phone);
             }
             else
             {
                 MessageBox.Show("Student not found.");
                 ClearFields();
-                LoadPaymentData();
             }
-        }
-
-        private void ViewPayment_Click(object sender, RoutedEventArgs e)
-        {
-            PaymentListBox.Visibility =
-                (PaymentListBox.Visibility == Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void PayButton_Click(object sender, RoutedEventArgs e)
@@ -157,7 +151,29 @@ namespace Dormitory_Management.View
                 })
                 .ToList();
 
-            PaymentListBox.ItemsSource = paymentData;
+            PaymentDataGrid.ItemsSource = paymentData;
+            
+            // Update summary information
+            UpdatePaymentSummary(paymentData);
+        }
+        
+        private void UpdatePaymentSummary<T>(List<T> paymentData) where T : class
+        {
+            TotalPaymentsText.Text = paymentData.Count.ToString();
+            
+            // Use reflection to get Amount property value
+            var totalAmount = paymentData.Sum(p => 
+            {
+                var amountProperty = typeof(T).GetProperty("Amount");
+                if (amountProperty != null)
+                {
+                    var value = amountProperty.GetValue(p);
+                    return Convert.ToInt32(value);
+                }
+                return 0;
+            });
+            
+            TotalAmountText.Text = $"${totalAmount:N0}";
         }
 
         private void btnExport_Click(object sender, RoutedEventArgs e)

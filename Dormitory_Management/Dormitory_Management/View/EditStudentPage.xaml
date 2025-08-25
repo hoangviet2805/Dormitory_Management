@@ -6,78 +6,92 @@
       xmlns:local="clr-namespace:Dormitory_Management.View"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="EditStudentPage" Background="Gainsboro">
+      Title="EditStudentPage" Background="#f0f2f5">
 
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <Grid Margin="20">
+        <Border CornerRadius="15" Background="White" Padding="20">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-        <!-- Phone Number -->
-        <TextBlock Text="Phone Number:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtMobile" Grid.Row="0" Grid.Column="1" Margin="5"/>
+                <!-- Phone Number -->
+                <TextBlock Text="Phone Number:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold" Margin="0,0,10,0"/>
+                <TextBox x:Name="txtMobile" Grid.Row="0" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
-        <!-- Search Button -->
-        <Button x:Name="btnSearch" Content="Search" Width="100" Margin="10" Grid.Row="0" Grid.Column="2" Click="btnSearch_Click"/>
+                <!-- Search Button -->
+                <Border Background="#1a73e8" CornerRadius="5" Width="100" Height="35" Margin="10" Grid.Row="0" Grid.Column="2">
+                    <Button x:Name="btnSearch" Content="Search" Width="100" Height="35" Background="Transparent" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Click="btnSearch_Click"/>
+                </Border>
 
-        <!-- Student Name -->
-        <TextBlock Text="Student Name:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtStudentName" Grid.Row="1" Grid.Column="1" Margin="5"/>
+                <!-- Student Name -->
+                <TextBlock Text="Student Name:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold" Margin="0,0,10,0"/>
+                <TextBox x:Name="txtStudentName" Grid.Row="1" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
-        <!-- Father Name -->
-        <TextBlock Text="Father's Name:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtFatherName" Grid.Row="2" Grid.Column="1" Margin="5"/>
+                <!-- Father Name -->
+                <TextBlock Text="Father's Name:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold" Margin="0,0,10,0"/>
+                <TextBox x:Name="txtFatherName" Grid.Row="2" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
-        <!-- Mother Name -->
-        <TextBlock Text="Mother's Name:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtMotherName" Grid.Row="3" Grid.Column="1" Margin="5"/>
+                <!-- Mother Name -->
+                <TextBlock Text="Mother's Name:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold" Margin="0,0,10,0"/>
+                <TextBox x:Name="txtMotherName" Grid.Row="3" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
-        <!-- Email -->
-        <TextBlock Text="Email ID:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtEmail" Grid.Row="4" Grid.Column="1" Margin="5"/>
+                <!-- Email -->
+                <TextBlock Text="Email ID:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold" Margin="0,0,10,0"/>
+                <TextBox x:Name="txtEmail" Grid.Row="4" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
-        <!-- Address -->
-        <TextBlock Text="Address:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtAddress" Grid.Row="5" Grid.Column="1" Margin="5"/>
+                <!-- Address -->
+                <TextBlock Text="Address:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold" Margin="0,0,10,0"/>
+                <TextBox x:Name="txtAddress" Grid.Row="5" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
-        <!-- ID Proof -->
-        <TextBlock Text="ID Proof:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtIDProof" Grid.Row="6" Grid.Column="1" Margin="5"/>
+                <!-- ID Proof -->
+                <TextBlock Text="ID Proof:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold" Margin="0,0,10,0"/>
+                <TextBox x:Name="txtIDProof" Grid.Row="6" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
-        <!-- Current Room Number (Read-only) -->
-        <TextBlock Text="Current Room:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center"/>
-        <TextBlock x:Name="txtCurrentRoom" Grid.Row="7" Grid.Column="1" Margin="5" VerticalAlignment="Center"/>
+                <!-- Current Room Number (Read-only) -->
+                <TextBlock Text="Current Room:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold" Margin="0,0,10,0"/>
+                <TextBlock x:Name="txtCurrentRoom" Grid.Row="7" Grid.Column="1" Margin="5" VerticalAlignment="Center" Foreground="#5f6368"/>
 
-        <!-- Room Number (ComboBox for changing) -->
-        <StackPanel x:Name="panelChangeRoom" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-            <TextBlock Text="Change Room:" VerticalAlignment="Center" Width="100"/>
-            <ComboBox x:Name="comboRoomNo" Width="150"/>
-        </StackPanel>
+                <!-- Room Number (ComboBox for changing) -->
+                <StackPanel x:Name="panelChangeRoom" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <TextBlock Text="Change Room:" VerticalAlignment="Center" Width="100" Foreground="#5f6368" FontWeight="SemiBold"/>
+                    <ComboBox x:Name="comboRoomNo" Width="150" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
+                </StackPanel>
 
-
-        <!-- Buttons -->
-        <StackPanel Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button x:Name="btnSave" Content="Update" Width="100" Margin="10" Click="btnSave_Click"/>
-            <Button x:Name="btnDelete" Content="Delete" Width="100" Margin="10" Click="btnDelete_Click"/>
-            <Button x:Name="btnClear" Content="Clear" Width="100" Margin="10" Click="btnClear_Click"/>
-            <Button x:Name="btnCheckout" Content="Checkout" Width="100" Margin="10" Grid.Row="9" Grid.Column="1" Click="btnCheckout_Click"/>
-            <Button x:Name="btnRecheckIn" Content="Re-check In" Width="100" Margin="10" Click="btnRecheckIn_Click"/>
-
-        </StackPanel>
+                <!-- Buttons -->
+                <StackPanel Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <Border Background="#1a73e8" CornerRadius="5" Width="100" Height="35" Margin="10,0">
+                        <Button x:Name="btnSave" Content="Update" Width="100" Height="35" Background="Transparent" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Click="btnSave_Click"/>
+                    </Border>
+                    <Border Background="#dc3545" CornerRadius="5" Width="100" Height="35" Margin="10,0">
+                        <Button x:Name="btnDelete" Content="Delete" Width="100" Height="35" Background="Transparent" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Click="btnDelete_Click"/>
+                    </Border>
+                    <Border Background="#5f6368" CornerRadius="5" Width="100" Height="35" Margin="10,0">
+                        <Button x:Name="btnClear" Content="Clear" Width="100" Height="35" Background="Transparent" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Click="btnClear_Click"/>
+                    </Border>
+                    <Border Background="#28a745" CornerRadius="5" Width="100" Height="35" Margin="10,0">
+                        <Button x:Name="btnCheckout" Content="Checkout" Width="100" Height="35" Background="Transparent" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Click="btnCheckout_Click"/>
+                    </Border>
+                    <Border Background="#ffc107" CornerRadius="5" Width="100" Height="35" Margin="10,0">
+                        <Button x:Name="btnRecheckIn" Content="Re-check In" Width="100" Height="35" Background="Transparent" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Click="btnRecheckIn_Click"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

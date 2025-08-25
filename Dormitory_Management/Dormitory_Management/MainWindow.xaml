@@ -4,35 +4,75 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Dormitory Management Program" Height="600" Width="1000"
+        Title="Dormitory Management" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize">
 
-    <Grid>
+    <Grid Background="#f0f2f5">
         <!-- Main Grid: Sidebar + Content -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="205"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Sidebar -->
-        <StackPanel Background="#34495e" VerticalAlignment="Stretch" HorizontalAlignment="Left">
-            <TextBlock Text="Dormitory Management" Foreground="White" FontSize="18" FontWeight="Bold" Margin="20"/>
-            <Separator Margin="10" Foreground="White"/>
+        <Border Background="White" CornerRadius="0,15,15,0">
+            <Border.Effect>
+                <DropShadowEffect Color="#40000000" Direction="270" ShadowDepth="5" BlurRadius="15" Opacity="0.2"/>
+            </Border.Effect>
+            
+            <StackPanel Margin="10">
+                <!-- Header -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                    <Grid Width="25" Height="25" Margin="0,0,8,0">
+                        <Ellipse>
+                            <Ellipse.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#1a73e8" Offset="0"/>
+                                    <GradientStop Color="#5a6fd8" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock Text="🏠" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                    <TextBlock Text="Dormitory Management" Foreground="#1a73e8" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
+                </StackPanel>
+                
+                <Separator Margin="0,0,0,10" Background="#e8eaed"/>
+                
+                <!-- Navigation Buttons -->
+                <StackPanel>
+                    <Border Background="#1a73e8" CornerRadius="5" Margin="0,0,0,5">
+                        <Button Content="Manage Rooms" Height="32" Background="Transparent" Foreground="White" FontWeight="SemiBold" BorderThickness="0" FontSize="11" Click="ManageRoomsClick"/>
+                    </Border>
+                    
+                    <Border Background="#1a73e8" CornerRadius="5" Margin="0,0,0,5">
+                        <Button Content="Add Student" Height="32" Background="Transparent" Foreground="White" FontWeight="SemiBold" BorderThickness="0" FontSize="11" Click="AddStudentClick"/>
+                    </Border>
+                    
+                    <Border Background="#1a73e8" CornerRadius="5" Margin="0,0,0,5">
+                        <Button Content="Update / Delete Student" Height="32" Background="Transparent" Foreground="White" FontWeight="SemiBold" BorderThickness="0" FontSize="11" Click="UpdateDeleteStudentClick"/>
+                    </Border>
+                    
+                    <Border Background="#1a73e8" CornerRadius="5" Margin="0,0,0,5">
+                        <Button Content="Room Payment" Height="32" Background="Transparent" Foreground="White" FontWeight="SemiBold" BorderThickness="0" FontSize="11" Click="RoomPaymentButton_Click"/>
+                    </Border>
+                    
+                    <Border Background="#1a73e8" CornerRadius="5" Margin="0,0,0,5">
+                        <Button Content="All Student Room Statuses" Height="32" Background="Transparent" Foreground="White" FontWeight="SemiBold" BorderThickness="0" FontSize="11" Click="ManageStudentStatusClick"/>
+                    </Border>
+                </StackPanel>
 
-            <Button Content="Manage Rooms" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="ManageRoomsClick"/>
-            <Button Content="Add Student" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="AddStudentClick"/>
-            <Button Content="Update / Delete Student" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="UpdateDeleteStudentClick"/>
-            <Button Content="Room Payment" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="RoomPaymentButton_Click"/>
-            <Button Content="All Student Room Statuses" Margin="10" Height="40" Background="#2980b9" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="ManageStudentStatusClick"/>
+                <Separator Margin="0,10,0,10" Background="#e8eaed"/>
 
-            <Separator Margin="10" Foreground="White"/>
-
-            <!-- Logout Button -->
-            <Button Content="Logout" Margin="10" Height="40" Background="#e74c3c" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" BorderThickness="1" Click="Logout_Click"/>
-        </StackPanel>
+                <!-- Logout Button -->
+                <Border Background="#dc3545" CornerRadius="5">
+                    <Button Content="Logout" Height="32" Background="Transparent" Foreground="White" FontWeight="SemiBold" BorderThickness="0" FontSize="11" Click="Logout_Click"/>
+                </Border>
+            </StackPanel>
+        </Border>
 
         <!-- Main Content -->
-        <Frame x:Name="MainFrame" Grid.Column="1" Background="#f4f6f7" Margin="10"/>
+        <Frame x:Name="MainFrame" Grid.Column="1" Background="#f0f2f5" Margin="5"/>
     </Grid>
 </Window>

@@ -98,6 +98,7 @@ namespace Dormitory_Management.View
 
 
         // Save update
+        // Save update
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             string name = txtStudentName.Text.Trim();
@@ -148,9 +149,32 @@ namespace Dormitory_Management.View
                 long newRoomNo = (long)comboRoomNo.SelectedItem;
                 long? oldRoomNo = student.RoomNo;
 
+                var newRoom = _context.Rooms.FirstOrDefault(r => r.RoomNo == newRoomNo);
+                if (newRoom == null)
+                {
+                    MessageBox.Show("Room not found.");
+                    return;
+                }
+
+                if (newRoom.RoomStatus == "No")
+                {
+                    MessageBox.Show("Phòng này đang bảo trì, không thể đổi sang.");
+                    return;
+                }
+
+                if (newRoom.Booked == "Yes")
+                {
+                    MessageBox.Show("Room is already booked.");
+                    return;
+                }
+
                 if (oldRoomNo != newRoomNo)
                 {
-                    var confirm = MessageBox.Show($"Are you sure you want to change room from {oldRoomNo?.ToString() ?? "None"} to {newRoomNo}?", "Confirm Room Change", MessageBoxButton.YesNo);
+                    var confirm = MessageBox.Show(
+                        $"Are you sure you want to change room from {oldRoomNo?.ToString() ?? "None"} to {newRoomNo}?",
+                        "Confirm Room Change",
+                        MessageBoxButton.YesNo);
+
                     if (confirm != MessageBoxResult.Yes)
                         return;
 
@@ -170,6 +194,7 @@ namespace Dormitory_Management.View
             _context.SaveChanges();
             MessageBox.Show("Student information updated successfully.");
         }
+
 
 
         // Checkout
@@ -203,6 +228,7 @@ namespace Dormitory_Management.View
             }
         }
 
+        // Re-check in
         // Re-check in
         private void btnRecheckIn_Click(object sender, RoutedEventArgs e)
         {
@@ -246,19 +272,31 @@ namespace Dormitory_Management.View
 
             long selectedRoomNo = (long)comboRoomNo.SelectedItem;
 
+            var newRoom = _context.Rooms.FirstOrDefault(r => r.RoomNo == selectedRoomNo);
+            if (newRoom == null)
+            {
+                MessageBox.Show("Room not found.");
+                return;
+            }
+
+            if (newRoom.RoomStatus == "No")
+            {
+                MessageBox.Show("Phòng này đang bảo trì, không thể thêm sinh viên.");
+                return;
+            }
+
+            if (newRoom.Booked == "Yes")
+            {
+                MessageBox.Show("Selected room is already booked.");
+                return;
+            }
+
             var confirm = MessageBox.Show(
                 $"Are you sure you want to re-check in student {_currentStudent.Name} to room {selectedRoomNo}?",
                 "Confirm Re-check In", MessageBoxButton.YesNo);
 
             if (confirm != MessageBoxResult.Yes)
                 return;
-
-            var newRoom = _context.Rooms.FirstOrDefault(r => r.RoomNo == selectedRoomNo);
-            if (newRoom == null || newRoom.Booked == "Yes" || newRoom.RoomStatus != "Yes")
-            {
-                MessageBox.Show("Selected room is not available or not active.");
-                return;
-            }
 
             UpdateRoomStatus(_currentStudent.RoomNo, selectedRoomNo);
             _currentStudent.Living = "Yes";
@@ -272,6 +310,7 @@ namespace Dormitory_Management.View
             comboRoomNo.IsEnabled = false;
             btnSearch_Click(null, null); // Reload lại thông tin
         }
+
 
 
 

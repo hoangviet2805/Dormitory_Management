@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Dormitory_Management.Models;
-using System.Text.RegularExpressions;
 
 namespace Dormitory_Management.View
 {
@@ -28,18 +18,26 @@ namespace Dormitory_Management.View
         {
             InitializeComponent();
             _context = new Dormitory_ManagementContext();
-            LoadAvailableRooms(); 
+            LoadAvailableRooms();
         }
 
-        // Load các phòng chưa có sinh viên (Booked = "No")
+        // Chỉ load các phòng còn trống và đang hoạt động (Booked = "No" & RoomStatus = "Yes")
         private void LoadAvailableRooms()
         {
-            var availableRooms = _context.Rooms
-                .Where(r => r.Booked == "No")  
-                .Select(r => r.RoomNo)  
-                .ToList();
+            try
+            {
+                var availableRooms = _context.Rooms
+                    .Where(r => r.Booked == "No" && r.RoomStatus == "Yes")
+                    .Select(r => r.RoomNo)
+                    .ToList();
 
-            comboRoomNo.ItemsSource = availableRooms; 
+                comboRoomNo.ItemsSource = availableRooms;
+                comboRoomNo.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading rooms: " + ex.Message);
+            }
         }
 
         // Nút Lưu
@@ -56,16 +54,17 @@ namespace Dormitory_Management.View
                 string address = txtAddress.Text.Trim();
                 var selectedRoom = comboRoomNo.SelectedItem;
 
-                // Kiểm tra không để trống
-                if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(father) || string.IsNullOrWhiteSpace(mother) ||
-                    string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(cccd) ||
+                // Validate rỗng
+                if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(father) ||
+                    string.IsNullOrWhiteSpace(mother) || string.IsNullOrWhiteSpace(email) ||
+                    string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(cccd) ||
                     string.IsNullOrWhiteSpace(address) || selectedRoom == null)
                 {
                     MessageBox.Show("Please fill in all information!");
                     return;
                 }
 
-                // Kiểm tra định dạng
+                // Validate định dạng
                 if (!Regex.IsMatch(phone, @"^\d{10}$"))
                 {
                     MessageBox.Show("The phone number must consist of exactly 10 digits!");
@@ -90,24 +89,44 @@ namespace Dormitory_Management.View
                     MessageBox.Show("This phone number has already been used!");
                     return;
                 }
-
                 if (_context.Students.Any(s => s.Email == email))
                 {
                     MessageBox.Show("This email has already been used!");
                     return;
                 }
-
                 if (_context.Students.Any(s => s.Idproof == cccd))
                 {
                     MessageBox.Show("This ID Proof has already been used!");
                     return;
                 }
 
-                // Chuyển đổi số phòng
+                // Lấy thông tin phòng
                 long roomNo = Convert.ToInt64(selectedRoom);
+                var room = _context.Rooms.FirstOrDefault(r => r.RoomNo == roomNo);
+                if (room == null)
+                {
+                    MessageBox.Show("Room does not exist.");
+                    LoadAvailableRooms();
+                    return;
+                }
+
+                // Không cho thêm nếu phòng đang bảo trì (inactive)
+                if (room.RoomStatus == "No")
+                {
+                    MessageBox.Show($"Room {room.RoomNo} is under maintenance, cannot add student.");
+                    return;
+                }
+
+                // Không cho thêm nếu phòng đã được đặt
+                if (room.Booked == "Yes")
+                {
+                    MessageBox.Show($"Room {room.RoomNo} is already booked.");
+                    LoadAvailableRooms();
+                    return;
+                }
 
                 // Tạo sinh viên mới
-                Student student = new Student
+                var student = new Student
                 {
                     Mobile = phone,
                     Name = name,
@@ -120,13 +139,8 @@ namespace Dormitory_Management.View
                     Living = "Yes"
                 };
 
-                // Cập nhật trạng thái phòng
-                var room = _context.Rooms.FirstOrDefault(r => r.RoomNo == roomNo);
-                if (room != null)
-                {
-                    room.Booked = "Yes";
-                }
-
+                // Cập nhật trạng thái phòng và lưu
+                room.Booked = "Yes";
                 _context.Students.Add(student);
                 _context.SaveChanges();
 
@@ -139,7 +153,6 @@ namespace Dormitory_Management.View
                 MessageBox.Show("An error occurred while adding student:\n" + ex.Message);
             }
         }
-
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
@@ -155,7 +168,7 @@ namespace Dormitory_Management.View
             txtEmail.Clear();
             txtAddress.Clear();
             txtIDProof.Clear();
-            comboRoomNo.SelectedIndex = -1; 
+            comboRoomNo.SelectedIndex = -1;
         }
     }
 }

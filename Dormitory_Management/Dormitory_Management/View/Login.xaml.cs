@@ -70,6 +70,7 @@ namespace Dormitory_Management.View
             ForgotPassword forgotPasswordWindow = new ForgotPassword();
             forgotPasswordWindow.ShowDialog();
         }
+        
         private string HashPassword(string password)
         {
             using (SHA256 sha = SHA256.Create())

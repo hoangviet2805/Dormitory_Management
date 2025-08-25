@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Dormitory_Management.View"
       mc:Ignorable="d" 
-      Title="AddStudentPage" Background="Gainsboro" Width="900">
+      Title="AddStudentPage" Background="#f0f2f5" Width="900">
 
     <Grid Margin="30">
         <Grid.RowDefinitions>
@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border CornerRadius="10" Background="White" Padding="20" Grid.Row="1">
+        <Border CornerRadius="15" Background="White" Padding="20" Grid.Row="1">
             <Grid Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
@@ -33,41 +33,45 @@
                 </Grid.RowDefinitions>
 
                 <!-- Phone Number -->
-                <TextBlock Text="Phone Number:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtMobile" Grid.Row="0" Grid.Column="1" Margin="5"/>
+                <TextBlock Text="Phone Number:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtMobile" Grid.Row="0" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
                 <!-- Student Name -->
-                <TextBlock Text="Student Name:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtStudentName" Grid.Row="1" Grid.Column="1" Margin="5"/>
+                <TextBlock Text="Student Name:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtStudentName" Grid.Row="1" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
                 <!-- Father's Name -->
-                <TextBlock Text="Father's Name:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtFatherName" Grid.Row="2" Grid.Column="1" Margin="5"/>
+                <TextBlock Text="Father's Name:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtFatherName" Grid.Row="2" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
                 <!-- Mother's Name -->
-                <TextBlock Text="Mother's Name:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtMotherName" Grid.Row="3" Grid.Column="1" Margin="5"/>
+                <TextBlock Text="Mother's Name:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtMotherName" Grid.Row="3" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
                 <!-- Email -->
-                <TextBlock Text="Email ID:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtEmail" Grid.Row="4" Grid.Column="1" Margin="5"/>
+                <TextBlock Text="Email ID:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtEmail" Grid.Row="4" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
                 <!-- Address -->
-                <TextBlock Text="Permanent Address:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtAddress" Grid.Row="5" Grid.Column="1" Margin="5"/>
+                <TextBlock Text="Permanent Address:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtAddress" Grid.Row="5" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
                 <!-- ID Proof -->
-                <TextBlock Text="ID Proof:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtIDProof" Grid.Row="6" Grid.Column="1" Margin="5"/>
+                <TextBlock Text="ID Proof:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtIDProof" Grid.Row="6" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
                 <!-- Room Number -->
-                <TextBlock Text="Room Number:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center"/>
-                <ComboBox x:Name="comboRoomNo" Grid.Row="7" Grid.Column="1" Margin="5"/>
+                <TextBlock Text="Room Number:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Foreground="#5f6368" FontWeight="SemiBold"/>
+                <ComboBox x:Name="comboRoomNo" Grid.Row="7" Grid.Column="1" Margin="5" Height="35" BorderBrush="#dadce0" BorderThickness="1" Padding="10,5"/>
 
                 <!-- Buttons -->
                 <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-                    <Button x:Name="btnSave" Content="💾 Save" Width="100" Margin="10,0" Click="btnSave_Click"/>
-                    <Button x:Name="btnClear" Content="❌ Clear" Width="100" Margin="10,0" Click="btnClear_Click"/>
+                    <Border Background="#1a73e8" CornerRadius="5" Width="100" Height="35" Margin="10,0">
+                        <Button x:Name="btnSave" Content="💾 Save" Width="100" Height="35" Background="Transparent" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Click="btnSave_Click"/>
+                    </Border>
+                    <Border Background="#5f6368" CornerRadius="5" Width="100" Height="35" Margin="10,0">
+                        <Button x:Name="btnClear" Content="❌ Clear" Width="100" Height="35" Background="Transparent" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Click="btnClear_Click"/>
+                    </Border>
                 </StackPanel>
             </Grid>
         </Border>
