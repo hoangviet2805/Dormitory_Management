@@ -52,9 +52,12 @@ This project demonstrates desktop application development using WPF with databas
 ## Project Structure 
 Dormitory_Management
 ├── Dormitory_Management (WPF Source Code)
+
 ├── Database
 │ └── Dormitory_Management.sql
+
 └── Dormitory_Management.sln
+
 ## Author
 
 Hoang Van Viet
